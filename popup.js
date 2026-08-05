@@ -1,5 +1,4 @@
 <!-- POPUP AIRBET88 - PASANG DI KOLOM WELCOME SCRIPT -->
-<script>
 "use strict";
 
 (function () {
