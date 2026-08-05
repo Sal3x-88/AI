@@ -1,4 +1,3 @@
-<!-- POPUP AIRBET88 - PASANG DI KOLOM WELCOME SCRIPT -->
 "use strict";
 
 (function () {
@@ -887,5 +886,3 @@
     init();
   }
 })();
-
-</script>
