@@ -2,8 +2,8 @@
 
 (function () {
   const IMG = [
-    "https://www.image2url.com/r2/default/images/1785792882390-ead78651-d1dd-42e4-a6e0-da32e6705018.png",
-    "https://www.image2url.com/r2/default/images/1785792246945-c81a00fe-3a05-4e93-931f-79ffdcf9ec40.png",
+    "https://www.image2url.com/r2/default/images/1787962625769-8f09ad99-a1dc-454f-a38a-869a021bd5fd.jpg",
+    "https://www.image2url.com/r2/default/images/1787962654222-8869372d-bbbe-43d8-8bca-84906eba92a0.jpg",
    
   ];
 
