@@ -1218,7 +1218,7 @@
         <div class="airbet88-gif-box">
 
           <img
-            src="https://www.image2url.com/r2/default/gifs/1784829809669-8e602d39-2842-4aa9-97c3-48381ca2780f.gif"
+            src="https://www.image2url.com/r2/default/files/1788196760940-99c297a4-6cae-456d-add1-b529fab5c6ed.webp"
             alt="AIRBET88.com SENSASIONAL"
           >
 
