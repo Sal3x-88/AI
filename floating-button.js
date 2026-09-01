@@ -2,19 +2,19 @@
     "use strict";
 
     /* =========================================================
-       AIRBET88 FLOATING MENU
-       FINAL COMPACT LEFT VERSION
+       AIRBET88 FLOATING QUICK ACCESS
+       FINAL - LEFT BOTTOM / COMPACT / RESPONSIVE
     ========================================================= */
 
-    const STYLE_ID = "airbet88-floating-v3-style";
-    const WIDGET_ID = "airbet88-floating-v3";
+    const STYLE_ID = "airbet88-floating-final-style";
+    const WIDGET_ID = "airbet88-floating-final";
 
     const OLD_TRIGGER_ID = "floating_action_button_trigger";
     const OLD_LIST_ID = "floating_action_button_list";
 
 
     /* =========================================================
-       URL
+       LINKS
     ========================================================= */
 
     const URLS = {
@@ -38,26 +38,38 @@
 
 
     /* =========================================================
-       REMOVE OLD CUSTOM VERSION
-       Kalau sebelumnya pernah pasang script versi lama
+       CLEAN OLD CUSTOM VERSIONS
     ========================================================= */
 
-    [
-        "airbet88-custom-floating-menu",
-        "airbet88-floating-menu",
-        "airbet88-floating-replacement",
-        "airbet88-floating-v2",
-        "airbet88-floating-v3"
-    ].forEach(function (id) {
+    const OLD_CUSTOM_IDS = [
 
-        const old =
+        "airbet88-custom-floating-menu",
+
+        "airbet88-floating-menu",
+
+        "airbet88-floating-replacement",
+
+        "airbet88-floating-v2",
+
+        "airbet88-floating-v3",
+
+        "airbet88-floating-final"
+
+    ];
+
+
+    OLD_CUSTOM_IDS.forEach(function (id) {
+
+        const element =
             document.getElementById(id);
 
         if (
-            old &&
+            element &&
             id !== WIDGET_ID
         ) {
-            old.remove();
+
+            element.remove();
+
         }
 
     });
@@ -72,7 +84,9 @@
             WIDGET_ID
         )
     ) {
+
         return;
+
     }
 
 
@@ -153,29 +167,52 @@
 
 
         /*
-         * Sembunyikan wrapper bawaan hanya jika
-         * tidak berisi widget baru kita.
+         * Wrapper floating bawaan ikut disembunyikan
+         * supaya tidak menyisakan tombol / area kosong.
          */
 
-        const originalWrapper =
-            trigger
-                ? trigger.closest(
+        let originalWrapper = null;
+
+
+        if (trigger) {
+
+            originalWrapper =
+                trigger.closest(
                     ".floating-action-button"
-                )
-                : null;
+                );
+
+        }
 
 
         if (
-            originalWrapper &&
-            !originalWrapper.contains(
-                document.getElementById(
-                    WIDGET_ID
-                )
-            )
+            !originalWrapper &&
+            oldList
         ) {
+
+            originalWrapper =
+                oldList.closest(
+                    ".floating-action-button"
+                );
+
+        }
+
+
+        if (originalWrapper) {
 
             originalWrapper.style.setProperty(
                 "display",
+                "none",
+                "important"
+            );
+
+            originalWrapper.style.setProperty(
+                "visibility",
+                "hidden",
+                "important"
+            );
+
+            originalWrapper.style.setProperty(
+                "pointer-events",
                 "none",
                 "important"
             );
@@ -186,7 +223,7 @@
 
 
     /* =========================================================
-       STYLE
+       CREATE STYLE
     ========================================================= */
 
     if (
@@ -225,6 +262,7 @@
 
                 pointer-events:
                     none !important;
+
             }
 
 
@@ -233,7 +271,7 @@
                ANIMATION
             ================================================= */
 
-            @keyframes ab88TabPulse {
+            @keyframes ab88FinalPulse {
 
                 0%,
                 100% {
@@ -241,13 +279,13 @@
                     box-shadow:
 
                         0 0 8px
-                        rgba(65,255,225,.30),
+                        rgba(64,255,225,.28),
 
                         0 0 20px
-                        rgba(65,255,225,.12),
+                        rgba(64,255,225,.10),
 
-                        0 12px 28px
-                        rgba(0,0,0,.45);
+                        0 10px 28px
+                        rgba(0,0,0,.42);
 
                 }
 
@@ -257,13 +295,13 @@
                     box-shadow:
 
                         0 0 12px
-                        rgba(65,255,225,.65),
+                        rgba(64,255,225,.62),
 
                         0 0 28px
-                        rgba(65,255,225,.22),
+                        rgba(64,255,225,.20),
 
                         0 12px 32px
-                        rgba(0,0,0,.50);
+                        rgba(0,0,0,.48);
 
                 }
 
@@ -272,7 +310,7 @@
 
 
             /* =================================================
-               MAIN WIDGET
+               ROOT WIDGET
             ================================================= */
 
             #${WIDGET_ID} {
@@ -284,19 +322,16 @@
                     0 !important;
 
                 top:
-                    50% !important;
+                    auto !important;
+
+                bottom:
+                    42px !important;
 
                 transform:
-                    translateY(-50%) !important;
+                    none !important;
 
                 z-index:
                     2147483646 !important;
-
-                display:
-                    flex !important;
-
-                align-items:
-                    center !important;
 
                 width:
                     auto !important;
@@ -310,6 +345,12 @@
                 padding:
                     0 !important;
 
+                display:
+                    flex !important;
+
+                align-items:
+                    flex-end !important;
+
                 font-family:
                     Arial,
                     Helvetica,
@@ -320,6 +361,7 @@
 
                 pointer-events:
                     none;
+
             }
 
 
@@ -330,6 +372,7 @@
 
                 box-sizing:
                     border-box !important;
+
             }
 
 
@@ -339,7 +382,7 @@
             ================================================= */
 
             #${WIDGET_ID}
-            .ab88-side-nav {
+            .ab88-nav {
 
                 position:
                     relative;
@@ -353,11 +396,21 @@
                 flex-direction:
                     column;
 
+                align-items:
+                    flex-start;
+
                 gap:
-                    10px;
+                    7px;
+
+                margin:
+                    0;
+
+                padding:
+                    0;
 
                 pointer-events:
                     auto;
+
             }
 
 
@@ -373,10 +426,10 @@
                     relative;
 
                 width:
-                    42px;
+                    38px;
 
                 height:
-                    138px;
+                    92px;
 
                 margin:
                     0;
@@ -388,9 +441,9 @@
 
                     1px solid
                     rgba(
-                        84,
+                        80,
                         255,
-                        231,
+                        230,
                         .48
                     );
 
@@ -398,13 +451,19 @@
                     0;
 
                 border-radius:
-                    0 15px 15px 0;
+                    0 12px 12px 0;
 
                 outline:
                     none;
 
                 overflow:
                     hidden;
+
+                appearance:
+                    none;
+
+                -webkit-appearance:
+                    none;
 
                 cursor:
                     pointer;
@@ -419,35 +478,64 @@
                     center;
 
                 color:
-                    #dffff9;
+                    #e3fffb;
 
                 background:
 
                     radial-gradient(
                         circle at 100% 20%,
-                        rgba(73,255,225,.18),
-                        transparent 47%
+                        rgba(72,255,225,.20),
+                        transparent 46%
                     ),
 
                     linear-gradient(
                         155deg,
                         #075d58,
-                        #02212b
+                        #02202a
                     );
 
                 animation:
 
-                    ab88TabPulse
+                    ab88FinalPulse
                     2.5s
                     ease-in-out
                     infinite;
 
                 transition:
 
-                    width .25s ease,
-                    transform .25s ease,
-                    border-color .25s ease,
-                    background .25s ease;
+                    width .24s ease,
+                    border-color .24s ease,
+                    background .24s ease,
+                    box-shadow .24s ease;
+
+            }
+
+
+
+            #${WIDGET_ID}
+            .ab88-tab::before {
+
+                content:
+                    "";
+
+                position:
+                    absolute;
+
+                inset:
+                    0;
+
+                background:
+
+                    linear-gradient(
+                        180deg,
+                        transparent,
+                        rgba(94,255,233,.08),
+                        transparent
+                    );
+
+                pointer-events:
+                    none;
+
             }
 
 
@@ -462,34 +550,35 @@
                     absolute;
 
                 width:
-                    170%;
+                    160%;
 
                 height:
-                    26px;
+                    24px;
 
                 top:
-                    -45px;
+                    -40px;
 
                 left:
-                    -35%;
+                    -30%;
 
                 transform:
-                    rotate(-13deg);
+                    rotate(-14deg);
 
                 background:
 
                     linear-gradient(
                         180deg,
                         transparent,
-                        rgba(255,255,255,.23),
+                        rgba(255,255,255,.24),
                         transparent
                     );
 
                 transition:
-                    top .55s ease;
+                    top .50s ease;
 
                 pointer-events:
                     none;
+
             }
 
 
@@ -498,7 +587,8 @@
             .ab88-tab:hover::after {
 
                 top:
-                    155px;
+                    110px;
+
             }
 
 
@@ -509,7 +599,7 @@
             .ab88-tab.active {
 
                 width:
-                    46px;
+                    42px;
 
                 border-color:
                     #87ffef;
@@ -518,15 +608,27 @@
 
                     radial-gradient(
                         circle at 100% 20%,
-                        rgba(100,255,235,.29),
+                        rgba(106,255,236,.30),
                         transparent 47%
                     ),
 
                     linear-gradient(
                         155deg,
-                        #098c7e,
+                        #098d7f,
                         #043e47
                     );
+
+                box-shadow:
+
+                    0 0 10px
+                    rgba(80,255,229,.60),
+
+                    0 0 27px
+                    rgba(80,255,229,.20),
+
+                    0 12px 30px
+                    rgba(0,0,0,.46);
+
             }
 
 
@@ -542,22 +644,22 @@
 
                     rgba(
                         255,
-                        223,
+                        224,
                         111,
-                        .44
+                        .42
                     );
 
                 background:
 
                     radial-gradient(
                         circle at 100% 20%,
-                        rgba(255,219,87,.12),
+                        rgba(255,219,87,.10),
                         transparent 47%
                     ),
 
                     linear-gradient(
                         155deg,
-                        #07524e,
+                        #074e4a,
                         #031e29
                     );
 
@@ -566,11 +668,12 @@
 
                 box-shadow:
 
-                    0 0 10px
-                    rgba(255,217,86,.15),
+                    0 0 9px
+                    rgba(255,217,87,.13),
 
-                    0 12px 28px
-                    rgba(0,0,0,.43);
+                    0 10px 27px
+                    rgba(0,0,0,.42);
+
             }
 
 
@@ -587,32 +690,33 @@
 
                     radial-gradient(
                         circle at 100% 20%,
-                        rgba(255,223,111,.20),
+                        rgba(255,226,122,.20),
                         transparent 47%
                     ),
 
                     linear-gradient(
                         155deg,
-                        #087369,
-                        #043b42
+                        #087269,
+                        #043a42
                     );
 
                 box-shadow:
 
-                    0 0 10px
-                    rgba(255,229,138,.48),
+                    0 0 9px
+                    rgba(255,228,136,.50),
 
-                    0 0 23px
-                    rgba(255,210,70,.15),
+                    0 0 22px
+                    rgba(255,211,70,.14),
 
-                    0 13px 30px
-                    rgba(0,0,0,.48);
+                    0 12px 30px
+                    rgba(0,0,0,.46);
+
             }
 
 
 
             /* =================================================
-               SIDE TEXT
+               TAB TEXT
             ================================================= */
 
             #${WIDGET_ID}
@@ -634,13 +738,13 @@
                     #dffff9;
 
                 font-size:
-                    9px;
+                    7px;
 
                 line-height:
                     1;
 
                 letter-spacing:
-                    1px;
+                    0;
 
                 font-weight:
                     900;
@@ -650,14 +754,15 @@
 
                 text-shadow:
 
-                    0 0 5px
-                    rgba(75,255,227,.95),
+                    0 0 4px
+                    rgba(78,255,229,.95),
 
-                    0 0 11px
-                    rgba(75,255,227,.60),
+                    0 0 9px
+                    rgba(78,255,229,.57),
 
-                    0 0 20px
-                    rgba(75,255,227,.25);
+                    0 0 16px
+                    rgba(78,255,229,.22);
+
             }
 
 
@@ -667,15 +772,16 @@
             .ab88-tab-text {
 
                 color:
-                    #ffe57d;
+                    #ffe57e;
 
                 text-shadow:
 
                     0 0 5px
-                    rgba(255,225,113,.90),
+                    rgba(255,226,120,.88),
 
                     0 0 11px
-                    rgba(255,210,65,.38);
+                    rgba(255,210,65,.34);
+
             }
 
 
@@ -694,19 +800,25 @@
                     2147483647 !important;
 
                 left:
-                    52px !important;
+                    48px !important;
+
+                right:
+                    auto !important;
 
                 top:
-                    50% !important;
+                    auto !important;
+
+                bottom:
+                    42px !important;
 
                 width:
                     395px;
 
                 max-width:
-                    calc(100vw - 66px);
+                    calc(100vw - 60px);
 
                 max-height:
-                    calc(100dvh - 80px);
+                    calc(100dvh - 70px);
 
                 margin:
                     0;
@@ -717,35 +829,35 @@
                 overflow:
                     hidden;
 
-                border-radius:
-                    22px;
-
                 border:
 
                     1px solid
-                    rgba(85,255,231,.25);
+                    rgba(83,255,231,.25);
+
+                border-radius:
+                    22px;
 
                 background:
 
                     radial-gradient(
                         circle at 94% 0%,
                         rgba(57,255,221,.12),
-                        transparent 32%
+                        transparent 31%
                     ),
 
                     linear-gradient(
                         145deg,
                         rgba(5,66,65,.99),
-                        rgba(1,24,31,.995)
+                        rgba(1,23,31,.995)
                     );
 
                 box-shadow:
 
                     0 28px 70px
-                    rgba(0,0,0,.64),
+                    rgba(0,0,0,.62),
 
-                    0 0 35px
-                    rgba(61,255,224,.11),
+                    0 0 34px
+                    rgba(61,255,224,.10),
 
                     inset 0 1px 0
                     rgba(255,255,255,.06);
@@ -767,22 +879,22 @@
 
                 transform:
 
-                    translateY(-50%)
-                    translateX(-12px)
+                    translateX(-10px)
                     scale(.975);
 
                 transform-origin:
-                    left center;
+                    left bottom;
 
                 transition:
 
-                    opacity .24s ease,
+                    opacity .23s ease,
 
                     transform
                     .30s
                     cubic-bezier(.2,.8,.2,1),
 
-                    visibility .24s ease;
+                    visibility .23s ease;
+
             }
 
 
@@ -801,15 +913,15 @@
 
                 transform:
 
-                    translateY(-50%)
                     translateX(0)
                     scale(1);
+
             }
 
 
 
             /* =================================================
-               TOP NEON LINE
+               POPUP TOP NEON
             ================================================= */
 
             #${WIDGET_ID}
@@ -852,13 +964,14 @@
                     #56ffe3,
 
                     0 0 18px
-                    rgba(53,255,220,.55);
+                    rgba(53,255,220,.52);
+
             }
 
 
 
             /* =================================================
-               CLOSE BUTTON
+               CLOSE
             ================================================= */
 
             #${WIDGET_ID}
@@ -871,16 +984,16 @@
                     20;
 
                 top:
-                    12px;
+                    11px;
 
                 right:
-                    12px;
+                    11px;
 
                 width:
-                    30px;
+                    29px;
 
                 height:
-                    30px;
+                    29px;
 
                 margin:
                     0;
@@ -899,6 +1012,12 @@
                 outline:
                     none;
 
+                appearance:
+                    none;
+
+                cursor:
+                    pointer;
+
                 display:
                     flex;
 
@@ -908,14 +1027,11 @@
                 justify-content:
                     center;
 
-                cursor:
-                    pointer;
-
                 color:
                     #ffffff;
 
                 font-size:
-                    17px;
+                    16px;
 
                 line-height:
                     1;
@@ -934,13 +1050,14 @@
                 box-shadow:
 
                     0 0 11px
-                    rgba(255,70,98,.50),
+                    rgba(255,70,98,.48),
 
-                    0 0 23px
-                    rgba(255,70,98,.15);
+                    0 0 22px
+                    rgba(255,70,98,.14);
 
                 transition:
                     .22s ease;
+
             }
 
 
@@ -952,6 +1069,7 @@
 
                     rotate(90deg)
                     scale(1.07);
+
             }
 
 
@@ -965,18 +1083,19 @@
 
                 padding:
 
+                    22px
                     23px
-                    24px
-                    16px;
+                    15px;
+
             }
 
 
 
             #${WIDGET_ID}
-            .ab88-mini-title {
+            .ab88-mini {
 
                 margin:
-                    0 0 8px;
+                    0 0 7px;
 
                 padding:
                     0;
@@ -985,16 +1104,20 @@
                     #61ffe8;
 
                 font-size:
-                    9px;
+                    8px;
 
                 line-height:
                     1.2;
 
                 letter-spacing:
-                    1.8px;
+                    1.7px;
 
                 font-weight:
                     900;
+
+                text-transform:
+                    uppercase;
+
             }
 
 
@@ -1012,13 +1135,14 @@
                     #ffffff;
 
                 font-size:
-                    23px;
+                    22px;
 
                 line-height:
                     1.05;
 
                 font-weight:
                     900;
+
             }
 
 
@@ -1031,8 +1155,9 @@
 
                 text-shadow:
 
-                    0 0 14px
-                    rgba(69,255,226,.22);
+                    0 0 13px
+                    rgba(69,255,226,.20);
+
             }
 
 
@@ -1047,7 +1172,7 @@
                     0;
 
                 max-width:
-                    305px;
+                    300px;
 
                 color:
                     #91bbb6;
@@ -1056,7 +1181,8 @@
                     10px;
 
                 line-height:
-                    1.55;
+                    1.5;
+
             }
 
 
@@ -1071,8 +1197,9 @@
                 padding:
 
                     0
-                    19px
-                    19px;
+                    18px
+                    18px;
+
             }
 
 
@@ -1091,21 +1218,22 @@
 
                     repeat(
                         2,
-                        minmax(0, 1fr)
+                        minmax(0,1fr)
                     );
 
                 gap:
-                    9px;
+                    8px;
+
             }
 
 
 
             /* =================================================
-               MENU CARD
+               MENU ITEM
             ================================================= */
 
             #${WIDGET_ID}
-            .ab88-menu-item {
+            .ab88-item {
 
                 position:
                     relative;
@@ -1114,13 +1242,13 @@
                     0;
 
                 min-height:
-                    76px;
+                    73px;
 
                 margin:
                     0;
 
                 padding:
-                    11px 12px;
+                    10px 11px;
 
                 border:
 
@@ -1128,7 +1256,7 @@
                     rgba(87,255,232,.15);
 
                 border-radius:
-                    15px;
+                    14px;
 
                 outline:
                     none;
@@ -1141,9 +1269,6 @@
 
                 flex-direction:
                     column;
-
-                align-items:
-                    stretch;
 
                 justify-content:
                     space-between;
@@ -1164,22 +1289,23 @@
 
                     linear-gradient(
                         145deg,
-                        rgba(13,88,82,.43),
+                        rgba(13,88,82,.42),
                         rgba(2,31,39,.92)
                     );
 
                 transition:
 
-                    transform .23s ease,
-                    border-color .23s ease,
-                    background .23s ease,
-                    box-shadow .23s ease;
+                    transform .22s ease,
+                    border-color .22s ease,
+                    background .22s ease,
+                    box-shadow .22s ease;
+
             }
 
 
 
             #${WIDGET_ID}
-            .ab88-menu-item::before {
+            .ab88-item::before {
 
                 content:
                     "";
@@ -1188,16 +1314,16 @@
                     absolute;
 
                 width:
-                    80px;
+                    78px;
 
                 height:
-                    80px;
+                    78px;
 
                 right:
-                    -45px;
+                    -46px;
 
                 bottom:
-                    -50px;
+                    -49px;
 
                 border-radius:
                     50%;
@@ -1213,12 +1339,13 @@
 
                 pointer-events:
                     none;
+
             }
 
 
 
             #${WIDGET_ID}
-            .ab88-menu-item:hover {
+            .ab88-item:hover {
 
                 transform:
                     translateY(-2px);
@@ -1236,23 +1363,24 @@
 
                     linear-gradient(
                         145deg,
-                        rgba(14,121,109,.58),
+                        rgba(14,121,109,.57),
                         rgba(3,43,47,.98)
                     );
 
                 box-shadow:
 
                     0 8px 20px
-                    rgba(0,0,0,.22),
+                    rgba(0,0,0,.20),
 
                     0 0 16px
                     rgba(54,255,223,.07);
+
             }
 
 
 
             #${WIDGET_ID}
-            .ab88-menu-small {
+            .ab88-item-small {
 
                 position:
                     relative;
@@ -1270,16 +1398,17 @@
                     1.2;
 
                 letter-spacing:
-                    .65px;
+                    .6px;
 
                 font-weight:
                     900;
+
             }
 
 
 
             #${WIDGET_ID}
-            .ab88-menu-bottom {
+            .ab88-item-bottom {
 
                 position:
                     relative;
@@ -1297,13 +1426,14 @@
                     space-between;
 
                 gap:
-                    6px;
+                    5px;
+
             }
 
 
 
             #${WIDGET_ID}
-            .ab88-menu-name {
+            .ab88-item-name {
 
                 min-width:
                     0;
@@ -1315,31 +1445,33 @@
                     10px;
 
                 line-height:
-                    1.2;
+                    1.18;
 
                 font-weight:
                     900;
 
                 white-space:
                     normal;
+
             }
 
 
 
             #${WIDGET_ID}
-            .ab88-menu-description {
+            .ab88-item-desc {
 
                 margin-top:
                     3px;
 
                 color:
-                    #759f9a;
+                    #779e9a;
 
                 font-size:
                     7px;
 
                 line-height:
-                    1.3;
+                    1.25;
+
             }
 
 
@@ -1354,23 +1486,25 @@
                     #5effe5;
 
                 font-size:
-                    19px;
+                    18px;
 
                 line-height:
                     1;
 
                 transition:
-                    transform .22s ease;
+                    transform .20s ease;
+
             }
 
 
 
             #${WIDGET_ID}
-            .ab88-menu-item:hover
+            .ab88-item:hover
             .ab88-arrow {
 
                 transform:
                     translateX(3px);
+
             }
 
 
@@ -1389,10 +1523,10 @@
                     hidden;
 
                 padding:
-                    18px;
+                    17px;
 
                 margin:
-                    0 0 10px;
+                    0 0 9px;
 
                 border:
 
@@ -1400,7 +1534,7 @@
                     rgba(255,225,112,.20);
 
                 border-radius:
-                    16px;
+                    15px;
 
                 background:
 
@@ -1412,9 +1546,10 @@
 
                     linear-gradient(
                         145deg,
-                        rgba(12,91,83,.50),
+                        rgba(12,91,83,.49),
                         rgba(3,30,38,.95)
                     );
+
             }
 
 
@@ -1444,7 +1579,7 @@
                     );
 
                 font-size:
-                    68px;
+                    67px;
 
                 line-height:
                     1;
@@ -1454,6 +1589,7 @@
 
                 pointer-events:
                     none;
+
             }
 
 
@@ -1474,13 +1610,14 @@
                     #ffe17a;
 
                 font-size:
-                    8px;
+                    7px;
 
                 letter-spacing:
-                    1.3px;
+                    1.25px;
 
                 font-weight:
                     900;
+
             }
 
 
@@ -1508,6 +1645,7 @@
 
                 font-weight:
                     900;
+
             }
 
 
@@ -1522,7 +1660,7 @@
                     2;
 
                 max-width:
-                    285px;
+                    280px;
 
                 color:
                     #91b8b4;
@@ -1532,6 +1670,7 @@
 
                 line-height:
                     1.5;
+
             }
 
 
@@ -1547,19 +1686,19 @@
                     100%;
 
                 min-height:
-                    48px;
+                    47px;
 
                 margin:
                     0;
 
                 padding:
-                    0 15px;
+                    0 14px;
 
                 border:
                     0;
 
                 border-radius:
-                    14px;
+                    13px;
 
                 outline:
                     none;
@@ -1602,11 +1741,12 @@
 
                 box-shadow:
 
-                    0 10px 25px
+                    0 10px 24px
                     rgba(48,255,220,.16);
 
                 transition:
                     .22s ease;
+
             }
 
 
@@ -1619,8 +1759,9 @@
 
                 box-shadow:
 
-                    0 14px 30px
+                    0 14px 29px
                     rgba(48,255,220,.23);
+
             }
 
 
@@ -1634,17 +1775,11 @@
                 max-width: 768px
             ) {
 
-                #${WIDGET_ID}
-                .ab88-popup {
+                #${WIDGET_ID} {
 
-                    width:
-                        335px;
+                    bottom:
+                        68px !important;
 
-                    max-width:
-                        calc(100vw - 58px);
-
-                    left:
-                        47px !important;
                 }
 
 
@@ -1652,10 +1787,11 @@
                 .ab88-tab {
 
                     width:
-                        38px;
+                        35px;
 
                     height:
-                        125px;
+                        88px;
+
                 }
 
 
@@ -1665,7 +1801,29 @@
                 .ab88-tab.active {
 
                     width:
-                        41px;
+                        38px;
+
+                }
+
+
+                #${WIDGET_ID}
+                .ab88-popup {
+
+                    left:
+                        43px !important;
+
+                    bottom:
+                        68px !important;
+
+                    width:
+                        330px;
+
+                    max-width:
+                        calc(100vw - 52px);
+
+                    max-height:
+                        calc(100dvh - 95px);
+
                 }
 
             }
@@ -1681,38 +1839,65 @@
                 max-width: 520px
             ) {
 
+                /* =============================================
+                   ROOT POSITION
+
+                   Bottom navigation pada screenshot sekitar
+                   55-60px. Jadi floating diletakkan tepat
+                   di atas bottom navigation.
+                ============================================= */
+
                 #${WIDGET_ID} {
 
                     left:
                         0 !important;
 
+                    right:
+                        auto !important;
+
                     top:
-                        50% !important;
+                        auto !important;
+
+                    bottom:
+                        61px !important;
+
+                    transform:
+                        none !important;
+
                 }
 
 
 
-                /* SIDE BUTTON LEBIH KECIL */
+                /* =============================================
+                   SIDE NAV
+                ============================================= */
 
                 #${WIDGET_ID}
-                .ab88-side-nav {
+                .ab88-nav {
 
                     gap:
-                        8px;
+                        5px;
+
                 }
 
+
+
+                /* =============================================
+                   SMALL SIDE BUTTON
+                ============================================= */
 
                 #${WIDGET_ID}
                 .ab88-tab {
 
                     width:
-                        34px;
+                        31px;
 
                     height:
-                        118px;
+                        84px;
 
                     border-radius:
-                        0 12px 12px 0;
+                        0 10px 10px 0;
+
                 }
 
 
@@ -1722,10 +1907,8 @@
                 .ab88-tab.active {
 
                     width:
-                        37px;
+                        34px;
 
-                    transform:
-                        none;
                 }
 
 
@@ -1733,48 +1916,49 @@
                 .ab88-tab-text {
 
                     font-size:
-                        7px;
+                        6px;
 
                     letter-spacing:
                         0;
+
                 }
 
 
 
                 /* =============================================
                    POPUP MOBILE
-
-                   LEFT 41px:
-                   benar-benar dekat sisi kiri.
-
-                   max-height:
-                   sisakan ruang atas/bawah supaya
-                   tidak ketutup navbar bawah.
                 ============================================= */
 
                 #${WIDGET_ID}
                 .ab88-popup {
 
+                    position:
+                        fixed !important;
+
                     left:
-                        41px !important;
+                        37px !important;
+
+                    right:
+                        auto !important;
 
                     top:
-                        50% !important;
+                        auto !important;
+
+                    bottom:
+                        66px !important;
 
                     width:
+
                         min(
                             285px,
-                            calc(100vw - 49px)
+                            calc(100vw - 45px)
                         );
 
                     max-width:
-                        calc(100vw - 49px);
+                        calc(100vw - 45px);
 
                     max-height:
-                        calc(100dvh - 130px);
-
-                    border-radius:
-                        18px;
+                        calc(100dvh - 105px);
 
                     overflow-y:
                         auto;
@@ -1782,14 +1966,20 @@
                     overflow-x:
                         hidden;
 
+                    border-radius:
+                        18px;
+
                     scrollbar-width:
                         thin;
 
                     transform:
 
-                        translateY(-50%)
                         translateX(-8px)
                         scale(.98);
+
+                    transform-origin:
+                        left bottom;
+
                 }
 
 
@@ -1798,40 +1988,44 @@
 
                     transform:
 
-                        translateY(-50%)
                         translateX(0)
                         scale(1);
+
                 }
 
 
 
-                /* HEADER COMPACT */
+                /* =============================================
+                   HEADER
+                ============================================= */
 
                 #${WIDGET_ID}
                 .ab88-header {
 
                     padding:
 
-                        18px
                         17px
-                        12px;
+                        16px
+                        11px;
+
                 }
 
 
                 #${WIDGET_ID}
-                .ab88-mini-title {
+                .ab88-mini {
 
                     padding-right:
-                        34px;
-
-                    font-size:
-                        7px;
-
-                    letter-spacing:
-                        1.2px;
+                        32px;
 
                     margin-bottom:
+                        5px;
+
+                    font-size:
                         6px;
+
+                    letter-spacing:
+                        1.1px;
+
                 }
 
 
@@ -1839,30 +2033,32 @@
                 .ab88-title {
 
                     padding-right:
-                        25px;
+                        24px;
+
+                    margin-bottom:
+                        5px;
 
                     font-size:
-                        18px;
+                        17px;
 
                     line-height:
                         1.08;
 
-                    margin-bottom:
-                        6px;
                 }
 
 
                 #${WIDGET_ID}
                 .ab88-desc {
 
+                    max-width:
+                        230px;
+
                     font-size:
                         8px;
 
                     line-height:
-                        1.45;
+                        1.4;
 
-                    max-width:
-                        230px;
                 }
 
 
@@ -1870,24 +2066,27 @@
                 .ab88-close {
 
                     top:
-                        10px;
+                        9px;
 
                     right:
-                        10px;
+                        9px;
 
                     width:
-                        27px;
+                        26px;
 
                     height:
-                        27px;
+                        26px;
 
                     font-size:
-                        15px;
+                        14px;
+
                 }
 
 
 
-                /* BODY */
+                /* =============================================
+                   BODY
+                ============================================= */
 
                 #${WIDGET_ID}
                 .ab88-body {
@@ -1895,15 +2094,15 @@
                     padding:
 
                         0
-                        12px
-                        13px;
+                        11px
+                        12px;
+
                 }
 
 
 
                 /* =============================================
-                   TETAP 2 KOLOM DI MOBILE
-                   supaya popup tidak panjang ke bawah.
+                   2 COLUMNS
                 ============================================= */
 
                 #${WIDGET_ID}
@@ -1917,52 +2116,61 @@
                         );
 
                     gap:
-                        7px;
-                }
-
-
-
-                #${WIDGET_ID}
-                .ab88-menu-item {
-
-                    min-height:
-                        67px;
-
-                    padding:
-                        9px;
-
-                    border-radius:
-                        12px;
-                }
-
-
-                #${WIDGET_ID}
-                .ab88-menu-small {
-
-                    font-size:
                         6px;
 
-                    letter-spacing:
-                        .25px;
+                }
+
+
+
+                /* =============================================
+                   CARD
+                ============================================= */
+
+                #${WIDGET_ID}
+                .ab88-item {
+
+                    min-height:
+                        64px;
+
+                    padding:
+                        8px;
+
+                    border-radius:
+                        11px;
+
                 }
 
 
                 #${WIDGET_ID}
-                .ab88-menu-name {
+                .ab88-item-small {
+
+                    font-size:
+                        5px;
+
+                    letter-spacing:
+                        .2px;
+
+                }
+
+
+                #${WIDGET_ID}
+                .ab88-item-name {
 
                     font-size:
                         8px;
 
                     line-height:
-                        1.15;
+                        1.14;
+
                 }
 
 
                 #${WIDGET_ID}
-                .ab88-menu-description {
+                .ab88-item-desc {
 
                     display:
                         none;
+
                 }
 
 
@@ -1970,24 +2178,28 @@
                 .ab88-arrow {
 
                     font-size:
-                        17px;
+                        16px;
+
                 }
 
 
 
-                /* VIP */
+                /* =============================================
+                   VIP
+                ============================================= */
 
                 #${WIDGET_ID}
                 .ab88-vip-box {
 
                     padding:
-                        14px;
-
-                    border-radius:
                         13px;
 
                     margin-bottom:
-                        8px;
+                        7px;
+
+                    border-radius:
+                        12px;
+
                 }
 
 
@@ -1996,6 +2208,7 @@
 
                     font-size:
                         6px;
+
                 }
 
 
@@ -2004,6 +2217,7 @@
 
                     font-size:
                         14px;
+
                 }
 
 
@@ -2012,6 +2226,7 @@
 
                     font-size:
                         8px;
+
                 }
 
 
@@ -2019,13 +2234,17 @@
                 .ab88-vip-cta {
 
                     min-height:
-                        43px;
+                        42px;
+
+                    padding:
+                        0 12px;
 
                     border-radius:
-                        12px;
+                        11px;
 
                     font-size:
                         8px;
+
                 }
 
             }
@@ -2041,14 +2260,23 @@
                 max-width: 360px
             ) {
 
+                #${WIDGET_ID} {
+
+                    bottom:
+                        60px !important;
+
+                }
+
+
                 #${WIDGET_ID}
                 .ab88-tab {
 
                     width:
-                        31px;
+                        29px;
 
                     height:
-                        110px;
+                        80px;
+
                 }
 
 
@@ -2058,7 +2286,8 @@
                 .ab88-tab.active {
 
                     width:
-                        33px;
+                        31px;
+
                 }
 
 
@@ -2066,13 +2295,17 @@
                 .ab88-popup {
 
                     left:
-                        37px !important;
+                        35px !important;
+
+                    bottom:
+                        64px !important;
 
                     width:
-                        calc(100vw - 44px);
+                        calc(100vw - 42px);
 
                     max-width:
-                        calc(100vw - 44px);
+                        calc(100vw - 42px);
+
                 }
 
 
@@ -2080,15 +2313,17 @@
                 .ab88-title {
 
                     font-size:
-                        16px;
+                        15px;
+
                 }
 
 
                 #${WIDGET_ID}
-                .ab88-menu-item {
+                .ab88-item {
 
                     min-height:
-                        63px;
+                        61px;
+
                 }
 
             }
@@ -2096,7 +2331,7 @@
 
 
             /* =================================================
-               SHORT SCREEN
+               SHORT HEIGHT
             ================================================= */
 
             @media
@@ -2108,10 +2343,11 @@
                 .ab88-popup {
 
                     max-height:
-                        calc(100dvh - 80px);
+                        calc(100dvh - 90px);
 
                     overflow-y:
                         auto;
+
                 }
 
 
@@ -2119,18 +2355,20 @@
                 .ab88-header {
 
                     padding-top:
-                        15px;
+                        14px;
 
                     padding-bottom:
-                        10px;
+                        9px;
+
                 }
 
 
                 #${WIDGET_ID}
-                .ab88-menu-item {
+                .ab88-item {
 
                     min-height:
-                        60px;
+                        58px;
+
                 }
 
             }
@@ -2138,7 +2376,7 @@
 
 
             /* =================================================
-               REDUCE MOTION
+               REDUCED MOTION
             ================================================= */
 
             @media
@@ -2152,6 +2390,7 @@
 
                     animation:
                         none;
+
                 }
 
 
@@ -2159,6 +2398,7 @@
 
                     transition:
                         none !important;
+
                 }
 
             }
@@ -2191,21 +2431,23 @@
     widget.innerHTML = `
 
         <!-- =================================================
-             SIDE MENU
+             LEFT BUTTONS
         ================================================== -->
 
-        <div class="ab88-side-nav">
+        <div class="ab88-nav">
 
 
             <button
                 type="button"
                 class="ab88-tab"
-                data-ab88-popup="ab88-main-popup"
-                aria-label="AIRBET88 Menu"
+                data-ab88-popup="ab88-airbet-popup"
+                aria-label="AIRBET88 Quick Access"
             >
 
                 <span class="ab88-tab-text">
+
                     AIRBET88
+
                 </span>
 
             </button>
@@ -2220,7 +2462,9 @@
             >
 
                 <span class="ab88-tab-text">
+
                     VIP
+
                 </span>
 
             </button>
@@ -2236,7 +2480,7 @@
 
         <div
             class="ab88-popup"
-            id="ab88-main-popup"
+            id="ab88-airbet-popup"
         >
 
 
@@ -2245,7 +2489,9 @@
                 class="ab88-close"
                 aria-label="Close"
             >
+
                 ×
+
             </button>
 
 
@@ -2253,7 +2499,7 @@
             <div class="ab88-header">
 
 
-                <div class="ab88-mini-title">
+                <div class="ab88-mini">
 
                     AIRBET88 QUICK ACCESS
 
@@ -2264,8 +2510,11 @@
                 <div class="ab88-title">
 
                     SATU MENU,
+
                     <span>
+
                         SEMUA AKSES
+
                     </span>
 
                 </div>
@@ -2297,36 +2546,48 @@
                     ======================================= -->
 
                     <a
-                        class="ab88-menu-item"
+                        class="ab88-item"
                         href="${URLS.buktiJP}"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
 
-                        <div class="ab88-menu-small">
+                        <div class="ab88-item-small">
+
                             AIRBET88
+
                         </div>
 
 
-                        <div class="ab88-menu-bottom">
+
+                        <div class="ab88-item-bottom">
 
 
                             <div>
 
-                                <div class="ab88-menu-name">
+
+                                <div class="ab88-item-name">
+
                                     BUKTI JP
+
                                 </div>
 
 
-                                <div class="ab88-menu-description">
+                                <div class="ab88-item-desc">
+
                                     Lihat bukti kemenangan
+
                                 </div>
+
 
                             </div>
 
 
+
                             <span class="ab88-arrow">
+
                                 ›
+
                             </span>
 
 
@@ -2337,40 +2598,52 @@
 
 
                     <!-- ======================================
-                         RTP
+                         RTP GACOR
                     ======================================= -->
 
                     <a
-                        class="ab88-menu-item"
+                        class="ab88-item"
                         href="${URLS.rtp}"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
 
-                        <div class="ab88-menu-small">
+                        <div class="ab88-item-small">
+
                             LIVE INFO
+
                         </div>
 
 
-                        <div class="ab88-menu-bottom">
+
+                        <div class="ab88-item-bottom">
 
 
                             <div>
 
-                                <div class="ab88-menu-name">
+
+                                <div class="ab88-item-name">
+
                                     RTP GACOR
+
                                 </div>
 
 
-                                <div class="ab88-menu-description">
+                                <div class="ab88-item-desc">
+
                                     Cek RTP terbaru
+
                                 </div>
+
 
                             </div>
 
 
+
                             <span class="ab88-arrow">
+
                                 ›
+
                             </span>
 
 
@@ -2385,36 +2658,48 @@
                     ======================================= -->
 
                     <a
-                        class="ab88-menu-item"
+                        class="ab88-item"
                         href="${URLS.ayocek}"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
 
-                        <div class="ab88-menu-small">
+                        <div class="ab88-item-small">
+
                             OFFICIAL ACCESS
+
                         </div>
 
 
-                        <div class="ab88-menu-bottom">
+
+                        <div class="ab88-item-bottom">
 
 
                             <div>
 
-                                <div class="ab88-menu-name">
+
+                                <div class="ab88-item-name">
+
                                     AYOCEK
+
                                 </div>
 
 
-                                <div class="ab88-menu-description">
+                                <div class="ab88-item-desc">
+
                                     Cari akses AIRBET88
+
                                 </div>
+
 
                             </div>
 
 
+
                             <span class="ab88-arrow">
+
                                 ›
+
                             </span>
 
 
@@ -2425,40 +2710,52 @@
 
 
                     <!-- ======================================
-                         POINT ANTI RUNGKAD
+                         POINT
                     ======================================= -->
 
                     <a
-                        class="ab88-menu-item"
+                        class="ab88-item"
                         href="${URLS.point}"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
 
-                        <div class="ab88-menu-small">
+                        <div class="ab88-item-small">
+
                             MEMBER BENEFIT
+
                         </div>
 
 
-                        <div class="ab88-menu-bottom">
+
+                        <div class="ab88-item-bottom">
 
 
                             <div>
 
-                                <div class="ab88-menu-name">
+
+                                <div class="ab88-item-name">
+
                                     POINT ANTI RUNGKAD
+
                                 </div>
 
 
-                                <div class="ab88-menu-description">
+                                <div class="ab88-item-desc">
+
                                     Cek point & benefit
+
                                 </div>
+
 
                             </div>
 
 
+
                             <span class="ab88-arrow">
+
                                 ›
+
                             </span>
 
 
@@ -2492,7 +2789,9 @@
                 class="ab88-close"
                 aria-label="Close"
             >
+
                 ×
+
             </button>
 
 
@@ -2501,7 +2800,7 @@
 
 
                 <div
-                    class="ab88-mini-title"
+                    class="ab88-mini"
                     style="
                         color:#ffe17a;
                     "
@@ -2522,7 +2821,9 @@
                             color:#ffe58b;
                         "
                     >
+
                         VIP & VVIP
+
                     </span>
 
                 </div>
@@ -2585,9 +2886,13 @@
                     rel="noopener noreferrer"
                 >
 
+
                     <span>
+
                         LIHAT & DAFTAR VIP
+
                     </span>
+
 
 
                     <span
@@ -2596,8 +2901,11 @@
                             line-height:1;
                         "
                     >
+
                         ›
+
                     </span>
+
 
                 </a>
 
@@ -2612,39 +2920,46 @@
 
     /* =========================================================
        APPEND TO BODY
-       
-       Sengaja BODY, bukan ke floating wrapper lama.
-       Supaya position fixed benar-benar berdasarkan viewport.
     ========================================================= */
 
-    (
-        document.body ||
-        document.documentElement
-    ).appendChild(widget);
+    function appendWidget() {
+
+        if (!document.body) {
+
+            return false;
+
+        }
 
 
+        if (
+            !document.body.contains(
+                widget
+            )
+        ) {
 
-    /* =========================================================
-       ELEMENTS
-    ========================================================= */
+            document.body.appendChild(
+                widget
+            );
 
-    const tabs =
-        widget.querySelectorAll(
-            "[data-ab88-popup]"
+        }
+
+
+        return true;
+
+    }
+
+
+    if (!appendWidget()) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            appendWidget,
+            {
+                once: true
+            }
         );
 
-
-    const popups =
-        widget.querySelectorAll(
-            ".ab88-popup"
-        );
-
-
-    const closeButtons =
-        widget.querySelectorAll(
-            ".ab88-close"
-        );
-
+    }
 
 
     /* =========================================================
@@ -2653,132 +2968,145 @@
 
     function closeAll() {
 
+        widget
+            .querySelectorAll(
+                ".ab88-popup"
+            )
+            .forEach(
+                function (popup) {
 
-        popups.forEach(
-            function (popup) {
-
-                popup.classList.remove(
-                    "show"
-                );
-
-            }
-        );
-
-
-        tabs.forEach(
-            function (tab) {
-
-                tab.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-    }
-
-
-
-    /* =========================================================
-       OPEN POPUP
-    ========================================================= */
-
-    tabs.forEach(
-        function (tab) {
-
-
-            tab.addEventListener(
-                "click",
-                function (event) {
-
-
-                    event.preventDefault();
-
-                    event.stopPropagation();
-
-
-                    const popupID =
-                        this.getAttribute(
-                            "data-ab88-popup"
-                        );
-
-
-                    const popup =
-                        widget.querySelector(
-                            "#" + popupID
-                        );
-
-
-                    if (!popup) {
-                        return;
-                    }
-
-
-                    const isOpen =
-                        popup.classList.contains(
-                            "show"
-                        );
-
-
-                    closeAll();
-
-
-                    if (!isOpen) {
-
-
-                        popup.classList.add(
-                            "show"
-                        );
-
-
-                        this.classList.add(
-                            "active"
-                        );
-
-                    }
-
+                    popup.classList.remove(
+                        "show"
+                    );
 
                 }
             );
 
 
-        }
-    );
+        widget
+            .querySelectorAll(
+                ".ab88-tab"
+            )
+            .forEach(
+                function (tab) {
 
+                    tab.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =========================================================
+       OPEN / TOGGLE
+    ========================================================= */
+
+    widget
+        .querySelectorAll(
+            "[data-ab88-popup]"
+        )
+        .forEach(
+            function (button) {
+
+
+                button.addEventListener(
+                    "click",
+                    function (event) {
+
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+
+                        const popupID =
+                            this.getAttribute(
+                                "data-ab88-popup"
+                            );
+
+
+                        const target =
+                            widget.querySelector(
+                                "#" + popupID
+                            );
+
+
+                        if (!target) {
+
+                            return;
+
+                        }
+
+
+                        const alreadyOpen =
+                            target.classList.contains(
+                                "show"
+                            );
+
+
+                        closeAll();
+
+
+                        if (!alreadyOpen) {
+
+                            target.classList.add(
+                                "show"
+                            );
+
+
+                            this.classList.add(
+                                "active"
+                            );
+
+                        }
+
+
+                    }
+                );
+
+
+            }
+        );
 
 
     /* =========================================================
        CLOSE BUTTON
     ========================================================= */
 
-    closeButtons.forEach(
-        function (button) {
+    widget
+        .querySelectorAll(
+            ".ab88-close"
+        )
+        .forEach(
+            function (button) {
 
 
-            button.addEventListener(
-                "click",
-                function (event) {
+                button.addEventListener(
+                    "click",
+                    function (event) {
 
 
-                    event.preventDefault();
+                        event.preventDefault();
 
-                    event.stopPropagation();
-
-
-                    closeAll();
+                        event.stopPropagation();
 
 
-                }
-            );
+                        closeAll();
 
 
-        }
-    );
+                    }
+                );
 
+
+            }
+        );
 
 
     /* =========================================================
-       CLOSE AFTER LINK CLICK
+       LINKS
     ========================================================= */
 
     widget
@@ -2808,9 +3136,8 @@
         );
 
 
-
     /* =========================================================
-       PREVENT CLICK INSIDE
+       PREVENT INNER CLICK
     ========================================================= */
 
     widget.addEventListener(
@@ -2821,7 +3148,6 @@
 
         }
     );
-
 
 
     /* =========================================================
@@ -2848,7 +3174,6 @@
     );
 
 
-
     /* =========================================================
        ESC CLOSE
     ========================================================= */
@@ -2872,7 +3197,6 @@
     );
 
 
-
     /* =========================================================
        INITIAL HIDE
     ========================================================= */
@@ -2880,38 +3204,52 @@
     hideOriginalFloating();
 
 
-
     /* =========================================================
        WATCH WEBSITE RE-RENDER
-
-       Website kadang render floating bawaan lagi.
-       Observer akan menyembunyikannya kembali.
     ========================================================= */
+
+    let observerTimer = null;
+
 
     const observer =
         new MutationObserver(
             function () {
 
 
-                hideOriginalFloating();
+                clearTimeout(
+                    observerTimer
+                );
 
 
-                /*
-                 * Kalau website tanpa sengaja memindahkan
-                 * widget kita, masukkan lagi ke BODY.
-                 */
+                observerTimer =
+                    setTimeout(
+                        function () {
 
-                if (
-                    !document.body.contains(
-                        widget
-                    )
-                ) {
 
-                    document.body.appendChild(
-                        widget
+                            hideOriginalFloating();
+
+
+                            /*
+                             * Pastikan widget tetap ada.
+                             */
+
+                            if (
+                                document.body &&
+                                !document.body.contains(
+                                    widget
+                                )
+                            ) {
+
+                                document.body.appendChild(
+                                    widget
+                                );
+
+                            }
+
+
+                        },
+                        50
                     );
-
-                }
 
 
             }
@@ -2932,12 +3270,8 @@
     );
 
 
-
     /* =========================================================
-       ORIENTATION / RESIZE
-
-       Kalau HP diputar / ukuran berubah,
-       popup tetap aman.
+       RESIZE
     ========================================================= */
 
     window.addEventListener(
@@ -2945,23 +3279,20 @@
         function () {
 
 
-            const openedPopup =
+            const activePopup =
                 widget.querySelector(
                     ".ab88-popup.show"
                 );
 
 
-            if (!openedPopup) {
+            if (!activePopup) {
+
                 return;
+
             }
 
 
-            /*
-             * Browser otomatis hitung ulang CSS.
-             * Ini hanya memaksa layout repaint.
-             */
-
-            void openedPopup.offsetHeight;
+            void activePopup.offsetHeight;
 
 
         },
