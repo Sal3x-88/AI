@@ -1,193 +1,359 @@
 (function () {
     "use strict";
 
-    const STYLE_ID = "airbet88-floating-menu-style";
-    const WIDGET_ID = "airbet88-floating-menu";
-    const OLD_TRIGGER_ID = "floating_action_button_trigger";
-
     /* =========================================================
-       CEGAH WIDGET DUPLIKAT
+       AIRBET88 FLOATING MENU REPLACEMENT
     ========================================================= */
 
-    if (document.getElementById(WIDGET_ID)) return;
+    const STYLE_ID = "airbet88-custom-floating-style";
+    const MENU_ID = "airbet88-custom-floating-menu";
 
+    const TRIGGER_ID = "floating_action_button_trigger";
+    const LIST_ID = "floating_action_button_list";
 
-    /* =========================================================
-       NONAKTIFKAN FLOATING BUTTON LAMA
-    ========================================================= */
-
-    function disableOldTrigger() {
-        const oldTrigger =
-            document.getElementById(OLD_TRIGGER_ID);
-
-        if (!oldTrigger) return;
-
-        oldTrigger.style.setProperty(
-            "display",
-            "none",
-            "important"
-        );
-
-        oldTrigger.style.setProperty(
-            "visibility",
-            "hidden",
-            "important"
-        );
-
-        oldTrigger.style.setProperty(
-            "opacity",
-            "0",
-            "important"
-        );
-
-        oldTrigger.style.setProperty(
-            "pointer-events",
-            "none",
-            "important"
-        );
-    }
+    let initialized = false;
 
 
     /* =========================================================
-       CSS
+       LINKS
     ========================================================= */
 
-    if (!document.getElementById(STYLE_ID)) {
+    const LINKS = {
+        instagram: "https://linknewshortener-ai88.com/igofficialai",
+        point: "https://linknewshortener-ai88.com/point-anti-rungkad",
+        apk: "https://linknewshortener-ai88.com/apkairbet88",
+        rtp: "https://linknewshortener-ai88.com/rtp-gacor",
+        bukti: "https://linknewshortener-ai88.com/bukti-jp",
+        vip: "https://membershipvipairbet88.lovable.app"
+    };
 
-        const style =
-            document.createElement("style");
+
+    /* =========================================================
+       ICONS
+    ========================================================= */
+
+    const ICONS = {
+        instagram:
+            "https://api-hub-cdn.imgnxb.com/cms/AB8/floatingactionbutton/RS_b3a7967b-1807-412a-97ee-5a61bee129b3_638961647863728474.png",
+
+        point:
+            "https://api-hub-cdn.imgnxb.com/cms/AB8/floatingactionbutton/RS_033fe1cc-929d-4499-9810-334384d551b1_638961129099775246.png",
+
+        apk:
+            "https://api-hub-cdn.imgnxb.com/cms/AB8/floatingactionbutton/VIN_c8cefc35-4dc4-47c0-b905-86ebe4dd97da_638837793425915866.png",
+
+        rtp:
+            "https://api-hub-cdn.imgnxb.com/cms/AB8/floatingactionbutton/RS_22466002-6bd4-4ac5-ac06-8cf1a2e12557_638961647863884654.png",
+
+        bukti:
+            "https://api-hub-cdn.imgnxb.com/cms/AB8/floatingactionbutton/VIN_1a159763-c3ab-4cfb-bf35-bd21eb19d5dd_638837793426072213.png",
+
+        vip:
+            "https://api-hub-cdn.imgnxb.com/cms/AB8/floatingactionbutton/RS_5646f027-5cb8-4a67-8680-278f2a5591a3_638961129100087370.png"
+    };
+
+
+    /* =========================================================
+       CREATE STYLE
+    ========================================================= */
+
+    function createStyle() {
+
+        if (document.getElementById(STYLE_ID)) {
+            return;
+        }
+
+        const style = document.createElement("style");
 
         style.id = STYLE_ID;
 
         style.textContent = `
 
-            @keyframes airbet88Glow {
-                0%, 100% {
-                    box-shadow:
-                        0 0 10px rgba(73,255,225,.25),
-                        0 0 25px rgba(73,255,225,.10);
-                }
+            /* =================================================
+               HIDE ORIGINAL
+            ================================================= */
 
-                50% {
-                    box-shadow:
-                        0 0 15px rgba(73,255,225,.65),
-                        0 0 40px rgba(73,255,225,.25);
-                }
+            #${TRIGGER_ID},
+            #${LIST_ID} {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
             }
 
 
-            /* ===============================================
-               FLOATING WRAPPER
-            =============================================== */
+            .floating-action-button {
+                overflow: visible !important;
+            }
 
-            #${WIDGET_ID} {
-                position: fixed;
 
-                left: 0;
-                top: 50%;
+            /* =================================================
+               WRAPPER
+            ================================================= */
 
-                transform:
-                    translateY(-50%);
+            #${MENU_ID} {
+                position: relative !important;
 
-                z-index: 2147483646;
-
-                display: flex;
-
-                align-items: center;
+                display: flex !important;
+                align-items: center !important;
 
                 font-family:
                     Arial,
                     Helvetica,
-                    sans-serif;
+                    sans-serif !important;
+
+                z-index: 2147483646 !important;
+
+                box-sizing: border-box !important;
             }
 
 
-            /* ===============================================
-               SIDE NAV
-            =============================================== */
-
-            #${WIDGET_ID} .airbet-side-nav {
-                display: flex;
-
-                flex-direction: column;
-
-                gap: 12px;
+            #${MENU_ID} *,
+            #${MENU_ID} *::before,
+            #${MENU_ID} *::after {
+                box-sizing: border-box !important;
             }
 
 
-            /* ===============================================
-               SIDE BUTTON
-            =============================================== */
+            /* =================================================
+               LEFT NAV
+            ================================================= */
 
-            #${WIDGET_ID} .airbet-side-btn {
+            #${MENU_ID} .ab-nav {
                 position: relative;
 
-                width: 46px;
+                z-index: 30;
+
+                display: flex;
+                flex-direction: column;
+
+                gap: 10px;
+            }
+
+
+            /* =================================================
+               TAB
+            ================================================= */
+
+            #${MENU_ID} .ab-tab {
+                position: relative;
+
+                width: 47px;
                 height: 145px;
 
-                border:
-                    1px solid rgba(79,255,230,.50);
+                padding: 0;
 
-                border-left: none;
+                border:
+                    1px solid rgba(73,255,225,.52);
 
                 border-radius:
-                    0 15px 15px 0;
+                    0 16px 16px 0;
 
                 cursor: pointer;
 
                 overflow: hidden;
 
-                color: #d9fff9;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                color: #dffff9;
 
                 background:
+
                     radial-gradient(
-                        circle at 100% 25%,
-                        rgba(79,255,230,.18),
-                        transparent 50%
+                        circle at 100% 20%,
+                        rgba(73,255,225,.18),
+                        transparent 45%
                     ),
+
                     linear-gradient(
-                        155deg,
-                        #075f59,
-                        #021c26
+                        150deg,
+                        rgba(8,112,101,.98),
+                        rgba(2,24,33,.99)
                     );
 
-                animation:
-                    airbet88Glow
-                    2.5s
-                    ease-in-out
-                    infinite;
+                box-shadow:
+
+                    0 0 12px
+                    rgba(73,255,225,.24),
+
+                    0 10px 30px
+                    rgba(0,0,0,.40),
+
+                    inset 0 1px 0
+                    rgba(255,255,255,.10);
 
                 transition:
-                    width .25s ease,
-                    transform .25s ease,
-                    border-color .25s ease;
-
-                display: flex;
-
-                justify-content: center;
-                align-items: center;
+                    .28s cubic-bezier(.2,.8,.2,1);
             }
 
 
-            #${WIDGET_ID} .airbet-side-btn:hover,
-            #${WIDGET_ID} .airbet-side-btn.active {
-                width: 52px;
+            #${MENU_ID} .ab-tab::before {
+
+                content: "";
+
+                position: absolute;
+
+                inset: 0;
+
+                background:
+
+                    linear-gradient(
+                        180deg,
+                        transparent,
+                        rgba(100,255,235,.09),
+                        transparent
+                    );
+
+                pointer-events: none;
+            }
+
+
+            #${MENU_ID} .ab-tab::after {
+
+                content: "";
+
+                position: absolute;
+
+                width: 160%;
+                height: 28px;
+
+                left: -30%;
+                top: -45px;
 
                 transform:
-                    translateX(2px);
+                    rotate(-15deg);
 
-                border-color:
-                    #83ffef;
+                background:
+
+                    linear-gradient(
+                        180deg,
+                        transparent,
+                        rgba(255,255,255,.25),
+                        transparent
+                    );
+
+                transition:
+                    .55s ease;
             }
 
 
-            #${WIDGET_ID} .airbet-side-btn.vip {
-                border-color:
-                    rgba(255,225,120,.55);
+            #${MENU_ID} .ab-tab:hover::after {
+                top: 165px;
             }
 
 
-            #${WIDGET_ID} .airbet-side-text {
+            #${MENU_ID} .ab-tab:hover {
+
+                width: 53px;
+
+                transform:
+                    translateX(3px);
+
+                border-color:
+                    rgba(125,255,238,.95);
+
+                box-shadow:
+
+                    0 0 10px
+                    rgba(73,255,225,.65),
+
+                    0 0 30px
+                    rgba(73,255,225,.25),
+
+                    0 14px 35px
+                    rgba(0,0,0,.45);
+            }
+
+
+            #${MENU_ID} .ab-tab.active {
+
+                width: 54px;
+
+                transform:
+                    translateX(3px);
+
+                border-color:
+                    #8cfff0;
+
+                background:
+
+                    radial-gradient(
+                        circle at 100% 20%,
+                        rgba(118,255,237,.30),
+                        transparent 47%
+                    ),
+
+                    linear-gradient(
+                        150deg,
+                        #0a9786,
+                        #06434a
+                    );
+
+                box-shadow:
+
+                    0 0 10px
+                    rgba(113,255,237,.8),
+
+                    0 0 32px
+                    rgba(73,255,225,.37),
+
+                    0 16px 40px
+                    rgba(0,0,0,.5);
+            }
+
+
+            #${MENU_ID} .ab-tab.vip {
+
+                border-color:
+                    rgba(255,225,119,.55);
+
+                background:
+
+                    radial-gradient(
+                        circle at 100% 20%,
+                        rgba(255,217,84,.12),
+                        transparent 45%
+                    ),
+
+                    linear-gradient(
+                        150deg,
+                        #075c56,
+                        #021f2b
+                    );
+            }
+
+
+            #${MENU_ID} .ab-tab.vip:hover,
+            #${MENU_ID} .ab-tab.vip.active {
+
+                border-color:
+                    #ffe58a;
+
+                box-shadow:
+
+                    0 0 9px
+                    rgba(255,229,138,.65),
+
+                    0 0 25px
+                    rgba(255,210,70,.20),
+
+                    0 0 35px
+                    rgba(73,255,225,.15);
+            }
+
+
+            /* =================================================
+               TAB TEXT
+            ================================================= */
+
+            #${MENU_ID} .ab-tab-text {
+
+                position: relative;
+
+                z-index: 3;
+
                 writing-mode:
                     vertical-rl;
 
@@ -196,67 +362,61 @@
 
                 font-size: 10px;
 
-                font-weight: 900;
+                line-height: 1;
 
                 letter-spacing: 1px;
 
+                font-weight: 900;
+
+                color: #dffff9;
+
                 text-shadow:
-                    0 0 8px rgba(73,255,225,.75);
+
+                    0 0 5px
+                    rgba(75,255,226,.9),
+
+                    0 0 12px
+                    rgba(75,255,226,.45);
             }
 
 
-            #${WIDGET_ID} .airbet-side-btn.vip
-            .airbet-side-text {
+            #${MENU_ID} .ab-tab.vip
+            .ab-tab-text {
+
                 color: #ffe58b;
 
                 text-shadow:
-                    0 0 8px rgba(255,225,120,.65);
+
+                    0 0 6px
+                    rgba(255,226,120,.80),
+
+                    0 0 15px
+                    rgba(255,213,80,.35);
             }
 
 
-            /* ===============================================
+            /* =================================================
                POPUP
-            =============================================== */
+            ================================================= */
 
-            #${WIDGET_ID} .airbet-popup {
+            #${MENU_ID} .ab-popup {
+
                 position: absolute;
 
-                left: 67px;
+                left: 68px;
+
                 top: 50%;
 
-                width: 390px;
+                width: 410px;
 
                 max-width:
-                    calc(100vw - 80px);
+                    calc(100vw - 90px);
 
-                padding: 20px;
+                transform:
 
-                border:
-                    1px solid rgba(79,255,230,.25);
-
-                border-radius: 22px;
-
-                background:
-                    radial-gradient(
-                        circle at 100% 0%,
-                        rgba(79,255,230,.14),
-                        transparent 35%
-                    ),
-                    linear-gradient(
-                        145deg,
-                        rgba(5,61,62,.98),
-                        rgba(2,20,28,.99)
-                    );
-
-                box-shadow:
-                    0 25px 60px rgba(0,0,0,.55),
-                    0 0 35px rgba(73,255,225,.08);
-
-                backdrop-filter:
-                    blur(20px);
-
-                -webkit-backdrop-filter:
-                    blur(20px);
+                    translateY(-50%)
+                    translateX(-18px)
+                    scale(.97);
 
                 opacity: 0;
 
@@ -264,19 +424,61 @@
 
                 pointer-events: none;
 
-                transform:
-                    translateY(-50%)
-                    translateX(-15px)
-                    scale(.97);
+                padding: 0;
+
+                overflow: hidden;
+
+                border-radius: 24px;
+
+                border:
+
+                    1px solid
+                    rgba(81,255,230,.23);
+
+                background:
+
+                    radial-gradient(
+                        circle at 95% 0%,
+                        rgba(60,255,224,.14),
+                        transparent 32%
+                    ),
+
+                    linear-gradient(
+                        145deg,
+                        rgba(6,55,57,.985),
+                        rgba(1,17,25,.99)
+                    );
+
+                backdrop-filter:
+                    blur(22px);
+
+                -webkit-backdrop-filter:
+                    blur(22px);
+
+                box-shadow:
+
+                    0 30px 70px
+                    rgba(0,0,0,.65),
+
+                    0 0 40px
+                    rgba(73,255,225,.10),
+
+                    inset 0 1px 0
+                    rgba(255,255,255,.05);
 
                 transition:
+
                     opacity .25s ease,
-                    transform .3s ease,
-                    visibility .25s ease;
+
+                    transform .32s
+                    cubic-bezier(.2,.8,.2,1),
+
+                    visibility .25s;
             }
 
 
-            #${WIDGET_ID} .airbet-popup.show {
+            #${MENU_ID} .ab-popup.show {
+
                 opacity: 1;
 
                 visibility: visible;
@@ -284,199 +486,469 @@
                 pointer-events: auto;
 
                 transform:
+
                     translateY(-50%)
                     translateX(0)
                     scale(1);
             }
 
 
-            /* ===============================================
-               CLOSE
-            =============================================== */
+            #${MENU_ID} .ab-popup::before {
 
-            #${WIDGET_ID} .airbet-close {
+                content: "";
+
                 position: absolute;
 
-                top: 12px;
-                right: 12px;
+                top: 0;
+                left: 18%;
+
+                width: 64%;
+                height: 2px;
+
+                background:
+
+                    linear-gradient(
+                        90deg,
+                        transparent,
+                        #93fff0,
+                        #3cffe0,
+                        transparent
+                    );
+
+                box-shadow:
+
+                    0 0 8px #55ffe4,
+
+                    0 0 18px
+                    rgba(73,255,225,.50);
+            }
+
+
+            /* =================================================
+               CLOSE
+            ================================================= */
+
+            #${MENU_ID} .ab-close {
+
+                position: absolute;
+
+                z-index: 20;
+
+                top: 13px;
+                right: 13px;
 
                 width: 31px;
                 height: 31px;
 
-                border: none;
+                padding: 0;
 
                 border-radius: 50%;
 
+                border:
+
+                    1px solid
+                    rgba(255,255,255,.25);
+
                 cursor: pointer;
+
+                display: flex;
+
+                justify-content: center;
+                align-items: center;
 
                 color: #ffffff;
 
-                font-size: 18px;
-
+                font-size: 17px;
                 font-weight: 900;
 
+                line-height: 1;
+
                 background:
+
                     linear-gradient(
                         145deg,
-                        #ff536c,
-                        #9f0029
+                        #ff4f69,
+                        #9b0027
                     );
 
                 box-shadow:
-                    0 0 12px rgba(255,70,95,.40);
+
+                    0 0 12px
+                    rgba(255,69,96,.45);
+
+                transition:
+                    .25s ease;
             }
 
 
-            /* ===============================================
-               HEADER
-            =============================================== */
+            #${MENU_ID} .ab-close:hover {
 
-            #${WIDGET_ID} .airbet-mini {
+                transform:
+
+                    rotate(90deg)
+                    scale(1.08);
+            }
+
+
+            /* =================================================
+               HEADER
+            ================================================= */
+
+            #${MENU_ID} .ab-header {
+
+                padding:
+
+                    25px
+                    25px
+                    18px;
+            }
+
+
+            #${MENU_ID} .ab-small {
+
                 color: #5fffe6;
 
                 font-size: 9px;
 
+                letter-spacing: 2px;
+
                 font-weight: 900;
 
-                letter-spacing: 2px;
+                margin-bottom: 9px;
+            }
+
+
+            #${MENU_ID} .ab-title {
+
+                color: #ffffff;
+
+                font-size: 24px;
+
+                line-height: 1.05;
+
+                font-weight: 900;
 
                 margin-bottom: 8px;
             }
 
 
-            #${WIDGET_ID} .airbet-title {
-                color: #ffffff;
+            #${MENU_ID} .ab-title span {
 
-                font-size: 23px;
+                color: #6cffe8;
 
-                font-weight: 900;
+                text-shadow:
 
-                margin-bottom: 7px;
+                    0 0 12px
+                    rgba(73,255,225,.30);
             }
 
 
-            #${WIDGET_ID} .airbet-desc {
-                color: #8eb6b2;
+            #${MENU_ID} .ab-description {
+
+                max-width: 310px;
+
+                color: #91b8b4;
 
                 font-size: 11px;
 
-                line-height: 1.5;
-
-                margin-bottom: 16px;
-
-                max-width: 300px;
+                line-height: 1.55;
             }
 
 
-            /* ===============================================
-               MENU
-            =============================================== */
+            /* =================================================
+               BODY
+            ================================================= */
 
-            #${WIDGET_ID} .airbet-grid {
+            #${MENU_ID} .ab-body {
+
+                padding:
+
+                    0
+                    18px
+                    18px;
+            }
+
+
+            /* =================================================
+               MENU GRID
+            ================================================= */
+
+            #${MENU_ID} .ab-grid {
+
                 display: grid;
 
                 grid-template-columns:
-                    repeat(2, 1fr);
+
+                    repeat(
+                        2,
+                        minmax(0,1fr)
+                    );
 
                 gap: 9px;
             }
 
 
-            #${WIDGET_ID} .airbet-menu-item {
-                min-height: 70px;
+            /* =================================================
+               ITEM
+            ================================================= */
 
-                padding: 12px;
+            #${MENU_ID} .ab-item {
+
+                position: relative;
+
+                min-height: 77px;
+
+                padding: 11px;
+
+                border-radius: 15px;
 
                 border:
-                    1px solid rgba(79,255,230,.15);
 
-                border-radius: 14px;
+                    1px solid
+                    rgba(80,255,231,.14);
 
                 cursor: pointer;
 
-                color: #ffffff;
+                overflow: hidden;
 
-                text-align: left;
+                display: flex;
+
+                align-items: center;
+
+                gap: 10px;
+
+                text-decoration: none !important;
+
+                color: #ffffff !important;
 
                 background:
+
                     linear-gradient(
                         145deg,
-                        rgba(17,105,95,.45),
-                        rgba(3,30,39,.90)
+                        rgba(15,95,87,.43),
+                        rgba(3,29,38,.92)
                     );
 
                 transition:
-                    transform .2s ease,
-                    border-color .2s ease,
-                    background .2s ease;
+
+                    transform .25s ease,
+                    border-color .25s ease,
+                    background .25s ease;
             }
 
 
-            #${WIDGET_ID} .airbet-menu-item:hover {
+            #${MENU_ID} .ab-item:hover {
+
                 transform:
-                    translateY(-2px);
+                    translateY(-3px);
 
                 border-color:
-                    rgba(79,255,230,.55);
+                    rgba(91,255,232,.55);
 
                 background:
+
                     linear-gradient(
                         145deg,
-                        rgba(19,145,128,.60),
-                        rgba(3,40,45,.98)
+                        rgba(16,133,119,.60),
+                        rgba(3,41,46,.98)
                     );
             }
 
 
-            #${WIDGET_ID} .airbet-menu-small {
-                color: #5fffe6;
+            /* =================================================
+               ICON
+            ================================================= */
 
-                font-size: 8px;
+            #${MENU_ID} .ab-icon {
 
-                font-weight: 900;
+                flex: 0 0 auto;
 
-                letter-spacing: 1px;
+                width: 36px;
+                height: 36px;
 
-                margin-bottom: 14px;
-            }
+                display: flex;
 
+                align-items: center;
+                justify-content: center;
 
-            #${WIDGET_ID} .airbet-menu-title {
-                font-size: 11px;
-
-                font-weight: 900;
-            }
-
-
-            /* ===============================================
-               VIP
-            =============================================== */
-
-            #${WIDGET_ID} .airbet-vip-box {
-                padding: 18px;
-
-                margin-top: 10px;
-
-                margin-bottom: 12px;
-
-                border-radius: 16px;
+                border-radius: 12px;
 
                 border:
-                    1px solid rgba(255,226,120,.22);
+
+                    1px solid
+                    rgba(99,255,234,.17);
 
                 background:
+
+                    rgba(
+                        64,
+                        255,
+                        225,
+                        .06
+                    );
+
+                box-shadow:
+
+                    inset 0 0 12px
+                    rgba(73,255,225,.04);
+            }
+
+
+            #${MENU_ID} .ab-icon img {
+
+                display: block !important;
+
+                width: 24px !important;
+                height: 24px !important;
+
+                object-fit: contain !important;
+
+                max-width: none !important;
+
+                filter: none !important;
+            }
+
+
+            #${MENU_ID} .ab-info {
+
+                min-width: 0;
+
+                flex: 1;
+            }
+
+
+            #${MENU_ID} .ab-label {
+
+                color: #59fce3;
+
+                font-size: 7px;
+
+                letter-spacing: .7px;
+
+                font-weight: 900;
+
+                margin-bottom: 4px;
+            }
+
+
+            #${MENU_ID} .ab-name {
+
+                color: #ffffff;
+
+                font-size: 10px;
+
+                line-height: 1.2;
+
+                font-weight: 900;
+            }
+
+
+            #${MENU_ID} .ab-arrow {
+
+                flex:
+                    0 0 auto;
+
+                color: #63ffe8;
+
+                font-size: 20px;
+
+                font-weight: 400;
+
+                transition:
+                    transform .25s ease;
+            }
+
+
+            #${MENU_ID} .ab-item:hover
+            .ab-arrow {
+
+                transform:
+                    translateX(3px);
+            }
+
+
+            /* =================================================
+               VIP CONTENT
+            ================================================= */
+
+            #${MENU_ID} .ab-vip-box {
+
+                position: relative;
+
+                overflow: hidden;
+
+                padding: 20px;
+
+                margin-bottom: 11px;
+
+                border-radius: 17px;
+
+                border:
+
+                    1px solid
+                    rgba(255,224,111,.21);
+
+                background:
+
+                    radial-gradient(
+                        circle at 95% 0%,
+                        rgba(255,221,98,.14),
+                        transparent 37%
+                    ),
+
                     linear-gradient(
                         145deg,
-                        rgba(15,100,90,.52),
+                        rgba(13,99,89,.50),
                         rgba(3,30,38,.95)
                     );
             }
 
 
-            #${WIDGET_ID} .airbet-vip-title {
+            #${MENU_ID} .ab-vip-box::after {
+
+                content: "VIP";
+
+                position: absolute;
+
+                right: -8px;
+                bottom: -20px;
+
+                font-size: 75px;
+
+                font-weight: 900;
+
+                color:
+                    rgba(255,225,120,.04);
+            }
+
+
+            #${MENU_ID} .ab-vip-small {
+
+                position: relative;
+
+                z-index: 3;
+
+                color: #ffe27b;
+
+                font-size: 8px;
+
+                font-weight: 900;
+
+                letter-spacing: 1.5px;
+
+                margin-bottom: 7px;
+            }
+
+
+            #${MENU_ID} .ab-vip-title {
+
+                position: relative;
+
+                z-index: 3;
+
                 color: #ffffff;
 
-                font-size: 18px;
+                font-size: 19px;
 
                 font-weight: 900;
 
@@ -484,341 +956,201 @@
             }
 
 
-            #${WIDGET_ID} .airbet-vip-desc {
-                color: #91b8b4;
+            #${MENU_ID} .ab-vip-description {
+
+                position: relative;
+
+                z-index: 3;
+
+                max-width: 285px;
+
+                color: #96bbb7;
 
                 font-size: 10px;
 
-                line-height: 1.5;
+                line-height: 1.55;
             }
 
 
-            #${WIDGET_ID} .airbet-vip-button {
+            #${MENU_ID} .ab-vip-button {
+
                 width: 100%;
 
-                padding: 15px;
+                min-height: 52px;
 
-                border: none;
+                border: 0;
 
                 border-radius: 14px;
 
                 cursor: pointer;
 
-                color: #003a34;
+                display: flex;
+
+                align-items: center;
+
+                justify-content:
+                    space-between;
+
+                padding:
+                    0 16px;
+
+                color: #003d36;
 
                 font-size: 11px;
 
                 font-weight: 900;
 
+                text-decoration: none !important;
+
                 background:
+
                     linear-gradient(
                         105deg,
-                        #9effef,
+                        #a6fff0,
                         #4cebd2,
-                        #19b9a4
+                        #1ab9a5
                     );
 
+                box-shadow:
+
+                    0 10px 27px
+                    rgba(73,255,225,.17);
+
                 transition:
-                    transform .2s ease;
+                    .25s ease;
             }
 
 
-            #${WIDGET_ID} .airbet-vip-button:hover {
+            #${MENU_ID} .ab-vip-button:hover {
+
                 transform:
                     translateY(-2px);
+
+                box-shadow:
+
+                    0 15px 32px
+                    rgba(73,255,225,.25);
             }
 
 
-            /* ===============================================
+            /* =================================================
                MOBILE
-            =============================================== */
+            ================================================= */
 
-            @media (max-width: 620px) {
+            @media
+            (max-width: 600px) {
 
-                #${WIDGET_ID} .airbet-side-btn {
-                    width: 40px;
+                #${MENU_ID} .ab-tab {
+
+                    width: 41px;
                     height: 120px;
+
+                    border-radius:
+                        0 13px 13px 0;
                 }
 
 
-                #${WIDGET_ID} .airbet-side-btn:hover,
-                #${WIDGET_ID} .airbet-side-btn.active {
-                    width: 44px;
+                #${MENU_ID} .ab-tab:hover,
+                #${MENU_ID} .ab-tab.active {
+
+                    width: 45px;
                 }
 
 
-                #${WIDGET_ID} .airbet-side-text {
+                #${MENU_ID} .ab-tab-text {
+
                     font-size: 8px;
+
+                    letter-spacing: 0;
                 }
 
 
-                #${WIDGET_ID} .airbet-popup {
-                    left: 53px;
+                #${MENU_ID} .ab-popup {
+
+                    left: 54px;
 
                     width:
-                        calc(100vw - 65px);
+                        calc(100vw - 66px);
 
                     max-height:
-                        85vh;
+                        86vh;
 
                     overflow-y:
                         auto;
+
+                    border-radius:
+                        20px;
                 }
 
 
-                #${WIDGET_ID} .airbet-grid {
+                #${MENU_ID} .ab-header {
+
+                    padding:
+
+                        21px
+                        17px
+                        15px;
+                }
+
+
+                #${MENU_ID} .ab-title {
+
+                    font-size:
+                        20px;
+                }
+
+
+                #${MENU_ID} .ab-body {
+
+                    padding:
+
+                        0
+                        14px
+                        14px;
+                }
+
+
+                #${MENU_ID} .ab-grid {
+
                     grid-template-columns:
                         1fr;
                 }
 
-            }
 
+                #${MENU_ID} .ab-item {
 
-            /* ===============================================
-               FORCE HIDE OLD BUTTON
-            =============================================== */
+                    min-height:
+                        62px;
+                }
 
-            #${OLD_TRIGGER_ID} {
-                display: none !important;
-
-                visibility: hidden !important;
-
-                opacity: 0 !important;
-
-                pointer-events: none !important;
             }
 
         `;
 
-        (document.head || document.documentElement)
-            .appendChild(style);
+        (
+            document.head ||
+            document.documentElement
+        ).appendChild(style);
     }
 
 
     /* =========================================================
-       CREATE WIDGET
+       CLOSE ALL
     ========================================================= */
 
-    const widget =
-        document.createElement("div");
+    function closeAll(menu) {
 
-    widget.id = WIDGET_ID;
+        menu
+            .querySelectorAll(".ab-popup")
+            .forEach(function (popup) {
 
-    widget.innerHTML = `
-
-        <div class="airbet-side-nav">
-
-            <button
-                type="button"
-                class="airbet-side-btn"
-                data-airbet-card="airbet-main-card"
-            >
-                <span class="airbet-side-text">
-                    AIRBET88
-                </span>
-            </button>
-
-
-            <button
-                type="button"
-                class="airbet-side-btn vip"
-                data-airbet-card="airbet-vip-card"
-            >
-                <span class="airbet-side-text">
-                    VIP
-                </span>
-            </button>
-
-        </div>
-
-
-        <!-- AIRBET88 -->
-
-        <div
-            class="airbet-popup"
-            id="airbet-main-card"
-        >
-
-            <button
-                type="button"
-                class="airbet-close"
-            >
-                ×
-            </button>
-
-
-            <div class="airbet-mini">
-                AIRBET88 QUICK ACCESS
-            </div>
-
-
-            <div class="airbet-title">
-                SATU MENU, SEMUA AKSES
-            </div>
-
-
-            <div class="airbet-desc">
-                Temukan akses penting AIRBET88
-                dengan cepat tanpa perlu mencari
-                satu per satu.
-            </div>
-
-
-            <div class="airbet-grid">
-
-                <button
-                    type="button"
-                    class="airbet-menu-item"
-                    data-url="https://linknewshortener-ai88.com/bukti-jp"
-                >
-
-                    <div class="airbet-menu-small">
-                        AIRBET88
-                    </div>
-
-                    <div class="airbet-menu-title">
-                        BUKTI JP
-                    </div>
-
-                </button>
-
-
-                <button
-                    type="button"
-                    class="airbet-menu-item"
-                    data-url="https://linknewshortener-ai88.com/rtp-gacor"
-                >
-
-                    <div class="airbet-menu-small">
-                        LIVE INFO
-                    </div>
-
-                    <div class="airbet-menu-title">
-                        RTP GACOR
-                    </div>
-
-                </button>
-
-
-                <button
-                    type="button"
-                    class="airbet-menu-item"
-                    data-url="https://linknewshortener-ai88.com/searchingairbet88"
-                >
-
-                    <div class="airbet-menu-small">
-                        OFFICIAL ACCESS
-                    </div>
-
-                    <div class="airbet-menu-title">
-                        AYOCEK
-                    </div>
-
-                </button>
-
-
-                <button
-                    type="button"
-                    class="airbet-menu-item"
-                    data-url="https://linknewshortener-ai88.com/point-anti-rungkad"
-                >
-
-                    <div class="airbet-menu-small">
-                        MEMBER BENEFIT
-                    </div>
-
-                    <div class="airbet-menu-title">
-                        POINT ANTI RUNGKAD
-                    </div>
-
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- VIP -->
-
-        <div
-            class="airbet-popup"
-            id="airbet-vip-card"
-        >
-
-            <button
-                type="button"
-                class="airbet-close"
-            >
-                ×
-            </button>
-
-
-            <div
-                class="airbet-mini"
-                style="color:#ffe58b;"
-            >
-                AIRBET88 VIP MEMBERSHIP
-            </div>
-
-
-            <div class="airbet-title">
-                UPGRADE KE VIP & VVIP
-            </div>
-
-
-            <div class="airbet-vip-box">
-
-                <div class="airbet-vip-title">
-                    AIRBET88 VIP & VVIP
-                </div>
-
-
-                <div class="airbet-vip-desc">
-                    Dapatkan informasi lengkap mengenai
-                    layanan prioritas, membership dan
-                    berbagai benefit eksklusif.
-                </div>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="airbet-vip-button"
-                data-url="https://membershipvipairbet88.lovable.app/"
-            >
-                LIHAT & DAFTAR VIP →
-            </button>
-
-        </div>
-
-    `;
-
-
-    /* =========================================================
-       APPEND
-    ========================================================= */
-
-    document.body.appendChild(widget);
-
-
-    /* =========================================================
-       CLOSE
-    ========================================================= */
-
-    function closeAllCards() {
-
-        widget
-            .querySelectorAll(".airbet-popup")
-            .forEach(function (card) {
-
-                card.classList.remove("show");
+                popup.classList.remove("show");
 
             });
 
 
-        widget
-            .querySelectorAll(".airbet-side-btn")
+        menu
+            .querySelectorAll(".ab-tab")
             .forEach(function (button) {
 
                 button.classList.remove("active");
@@ -829,164 +1161,811 @@
 
 
     /* =========================================================
-       SIDE BUTTON
+       CREATE NEW MENU
     ========================================================= */
 
-    widget
-        .querySelectorAll("[data-airbet-card]")
-        .forEach(function (button) {
+    function createMenu(wrapper) {
 
-            button.addEventListener(
-                "click",
-                function (event) {
+        if (
+            !wrapper ||
+            document.getElementById(MENU_ID)
+        ) {
+            return;
+        }
 
-                    event.preventDefault();
-                    event.stopPropagation();
 
-                    const targetID =
-                        this.getAttribute(
-                            "data-airbet-card"
-                        );
+        const menu =
+            document.createElement("div");
 
-                    const card =
-                        widget.querySelector(
-                            "#" + targetID
-                        );
+        menu.id = MENU_ID;
 
-                    if (!card) return;
 
-                    const alreadyOpen =
-                        card.classList.contains(
-                            "show"
-                        );
+        menu.innerHTML = `
 
-                    closeAllCards();
+            <!-- =============================================
+                 SIDE NAV
+            ============================================== -->
 
-                    if (!alreadyOpen) {
+            <div class="ab-nav">
 
-                        card.classList.add(
-                            "show"
-                        );
+                <button
+                    type="button"
+                    class="ab-tab"
+                    data-popup="ab-airbet-popup"
+                >
 
-                        this.classList.add(
-                            "active"
-                        );
+                    <span class="ab-tab-text">
+                        AIRBET88
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="ab-tab vip"
+                    data-popup="ab-vip-popup"
+                >
+
+                    <span class="ab-tab-text">
+                        VIP
+                    </span>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 AIRBET POPUP
+            ============================================== -->
+
+            <div
+                class="ab-popup"
+                id="ab-airbet-popup"
+            >
+
+                <button
+                    type="button"
+                    class="ab-close"
+                >
+                    ×
+                </button>
+
+
+                <div class="ab-header">
+
+                    <div class="ab-small">
+                        AIRBET88 QUICK ACCESS
+                    </div>
+
+
+                    <div class="ab-title">
+
+                        SATU MENU,
+                        <span>
+                            SEMUA AKSES
+                        </span>
+
+                    </div>
+
+
+                    <div class="ab-description">
+
+                        Temukan akses penting AIRBET88
+                        dengan cepat melalui satu menu.
+
+                    </div>
+
+                </div>
+
+
+                <div class="ab-body">
+
+
+                    <div class="ab-grid">
+
+
+                        <!-- INSTAGRAM -->
+
+                        <a
+                            class="ab-item"
+                            href="${LINKS.instagram}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <div class="ab-icon">
+
+                                <img
+                                    src="${ICONS.instagram}"
+                                    alt="Instagram AIRBET88"
+                                >
+
+                            </div>
+
+
+                            <div class="ab-info">
+
+                                <div class="ab-label">
+                                    SOCIAL MEDIA
+                                </div>
+
+                                <div class="ab-name">
+                                    INSTAGRAM
+                                </div>
+
+                            </div>
+
+
+                            <div class="ab-arrow">
+                                ›
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- APK -->
+
+                        <a
+                            class="ab-item"
+                            href="${LINKS.apk}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <div class="ab-icon">
+
+                                <img
+                                    src="${ICONS.apk}"
+                                    alt="APK AIRBET88"
+                                >
+
+                            </div>
+
+
+                            <div class="ab-info">
+
+                                <div class="ab-label">
+                                    OFFICIAL APP
+                                </div>
+
+                                <div class="ab-name">
+                                    APK AIRBET88
+                                </div>
+
+                            </div>
+
+
+                            <div class="ab-arrow">
+                                ›
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- RTP -->
+
+                        <a
+                            class="ab-item"
+                            href="${LINKS.rtp}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <div class="ab-icon">
+
+                                <img
+                                    src="${ICONS.rtp}"
+                                    alt="RTP AIRBET88"
+                                >
+
+                            </div>
+
+
+                            <div class="ab-info">
+
+                                <div class="ab-label">
+                                    LIVE INFO
+                                </div>
+
+                                <div class="ab-name">
+                                    RTP GACOR
+                                </div>
+
+                            </div>
+
+
+                            <div class="ab-arrow">
+                                ›
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- BUKTI JP -->
+
+                        <a
+                            class="ab-item"
+                            href="${LINKS.bukti}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <div class="ab-icon">
+
+                                <img
+                                    src="${ICONS.bukti}"
+                                    alt="Bukti JP"
+                                >
+
+                            </div>
+
+
+                            <div class="ab-info">
+
+                                <div class="ab-label">
+                                    AIRBET88
+                                </div>
+
+                                <div class="ab-name">
+                                    BUKTI JP
+                                </div>
+
+                            </div>
+
+
+                            <div class="ab-arrow">
+                                ›
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- POINT -->
+
+                        <a
+                            class="ab-item"
+                            href="${LINKS.point}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <div class="ab-icon">
+
+                                <img
+                                    src="${ICONS.point}"
+                                    alt="Point Anti Rungkad"
+                                >
+
+                            </div>
+
+
+                            <div class="ab-info">
+
+                                <div class="ab-label">
+                                    MEMBER BENEFIT
+                                </div>
+
+                                <div class="ab-name">
+                                    POINT ANTI RUNGKAD
+                                </div>
+
+                            </div>
+
+
+                            <div class="ab-arrow">
+                                ›
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- VIP -->
+
+                        <a
+                            class="ab-item"
+                            href="${LINKS.vip}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <div class="ab-icon">
+
+                                <img
+                                    src="${ICONS.vip}"
+                                    alt="VIP AIRBET88"
+                                >
+
+                            </div>
+
+
+                            <div class="ab-info">
+
+                                <div
+                                    class="ab-label"
+                                    style="color:#ffe27d"
+                                >
+                                    EXCLUSIVE
+                                </div>
+
+                                <div class="ab-name">
+                                    VIP & VVIP
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="ab-arrow"
+                                style="color:#ffe27d"
+                            >
+                                ›
+                            </div>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 VIP POPUP
+            ============================================== -->
+
+            <div
+                class="ab-popup"
+                id="ab-vip-popup"
+            >
+
+                <button
+                    type="button"
+                    class="ab-close"
+                >
+                    ×
+                </button>
+
+
+                <div class="ab-header">
+
+                    <div
+                        class="ab-small"
+                        style="color:#ffe27d"
+                    >
+                        AIRBET88 VIP MEMBERSHIP
+                    </div>
+
+
+                    <div class="ab-title">
+
+                        UPGRADE KE
+                        <span
+                            style="color:#ffe58b"
+                        >
+                            VIP & VVIP
+                        </span>
+
+                    </div>
+
+
+                    <div class="ab-description">
+
+                        Nikmati akses membership
+                        dan berbagai benefit eksklusif
+                        AIRBET88.
+
+                    </div>
+
+                </div>
+
+
+                <div class="ab-body">
+
+
+                    <div class="ab-vip-box">
+
+                        <div class="ab-vip-small">
+                            EXCLUSIVE MEMBERSHIP
+                        </div>
+
+
+                        <div class="ab-vip-title">
+                            AIRBET88 VIP & VVIP
+                        </div>
+
+
+                        <div class="ab-vip-description">
+
+                            Temukan informasi membership,
+                            layanan prioritas dan berbagai
+                            benefit khusus member VIP.
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        class="ab-vip-button"
+                        href="${LINKS.vip}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+
+                        <span>
+                            LIHAT & DAFTAR VIP
+                        </span>
+
+                        <span
+                            style="
+                                font-size:22px;
+                                line-height:1;
+                            "
+                        >
+                            ›
+                        </span>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        /* =====================================================
+           INSERT INTO ORIGINAL WRAPPER
+        ===================================================== */
+
+        wrapper.appendChild(menu);
+
+
+        /* =====================================================
+           TAB EVENTS
+        ===================================================== */
+
+        menu
+            .querySelectorAll("[data-popup]")
+            .forEach(function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function (event) {
+
+                        event.preventDefault();
+                        event.stopPropagation();
+
+
+                        const popupID =
+                            this.getAttribute(
+                                "data-popup"
+                            );
+
+
+                        const popup =
+                            menu.querySelector(
+                                "#" + popupID
+                            );
+
+
+                        if (!popup) {
+                            return;
+                        }
+
+
+                        const isOpen =
+                            popup.classList.contains(
+                                "show"
+                            );
+
+
+                        closeAll(menu);
+
+
+                        if (!isOpen) {
+
+                            popup.classList.add(
+                                "show"
+                            );
+
+                            this.classList.add(
+                                "active"
+                            );
+
+                        }
 
                     }
+                );
 
-                }
-            );
-
-        });
+            });
 
 
-    /* =========================================================
-       CLOSE BUTTON
-    ========================================================= */
+        /* =====================================================
+           CLOSE
+        ===================================================== */
 
-    widget
-        .querySelectorAll(".airbet-close")
-        .forEach(function (button) {
+        menu
+            .querySelectorAll(".ab-close")
+            .forEach(function (button) {
 
-            button.addEventListener(
-                "click",
-                function (event) {
+                button.addEventListener(
+                    "click",
+                    function (event) {
 
-                    event.preventDefault();
-                    event.stopPropagation();
+                        event.preventDefault();
 
-                    closeAllCards();
+                        event.stopPropagation();
 
-                }
-            );
+                        closeAll(menu);
 
-        });
+                    }
+                );
 
-
-    /* =========================================================
-       LINKS
-    ========================================================= */
-
-    widget
-        .querySelectorAll("[data-url]")
-        .forEach(function (button) {
-
-            button.addEventListener(
-                "click",
-                function (event) {
-
-                    event.preventDefault();
-
-                    const url =
-                        this.getAttribute(
-                            "data-url"
-                        );
-
-                    if (!url) return;
-
-                    window.open(
-                        url,
-                        "_blank",
-                        "noopener,noreferrer"
-                    );
-
-                    closeAllCards();
-
-                }
-            );
-
-        });
+            });
 
 
-    /* =========================================================
-       CLICK OUTSIDE
-    ========================================================= */
+        /* =====================================================
+           LINK CLICK
+        ===================================================== */
 
-    document.addEventListener(
-        "click",
-        function (event) {
+        menu
+            .querySelectorAll("a")
+            .forEach(function (link) {
 
-            if (!widget.contains(event.target)) {
-                closeAllCards();
+                link.addEventListener(
+                    "click",
+                    function () {
+
+                        closeAll(menu);
+
+                    }
+                );
+
+            });
+
+
+        /* =====================================================
+           PREVENT INNER CLICK
+        ===================================================== */
+
+        menu.addEventListener(
+            "click",
+            function (event) {
+
+                event.stopPropagation();
+
             }
+        );
+
+
+        /* =====================================================
+           OUTSIDE CLICK
+        ===================================================== */
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    !menu.contains(
+                        event.target
+                    )
+                ) {
+
+                    closeAll(menu);
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           ESC
+        ===================================================== */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
+
+                    closeAll(menu);
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       INITIALIZE
+    ========================================================= */
+
+    function initialize() {
+
+        const trigger =
+            document.getElementById(
+                TRIGGER_ID
+            );
+
+
+        const oldList =
+            document.getElementById(
+                LIST_ID
+            );
+
+
+        let wrapper =
+            null;
+
+
+        if (trigger) {
+
+            wrapper =
+                trigger.closest(
+                    ".floating-action-button"
+                );
 
         }
-    );
 
 
-    /* =========================================================
-       ESC
-    ========================================================= */
+        if (!wrapper && oldList) {
 
-    document.addEventListener(
-        "keydown",
-        function (event) {
-
-            if (event.key === "Escape") {
-                closeAllCards();
-            }
+            wrapper =
+                oldList.closest(
+                    ".floating-action-button"
+                );
 
         }
-    );
+
+
+        if (!wrapper) {
+
+            wrapper =
+                document.querySelector(
+                    ".floating-action-button"
+                );
+
+        }
+
+
+        if (!wrapper) {
+            return false;
+        }
+
+
+        createStyle();
+
+
+        /*
+         * Jangan remove element lama.
+         * Cukup sembunyikan supaya JS bawaan
+         * website tidak error.
+         */
+
+        if (trigger) {
+
+            trigger.style.setProperty(
+                "display",
+                "none",
+                "important"
+            );
+
+        }
+
+
+        if (oldList) {
+
+            oldList.style.setProperty(
+                "display",
+                "none",
+                "important"
+            );
+
+        }
+
+
+        createMenu(wrapper);
+
+        initialized = true;
+
+        return true;
+    }
 
 
     /* =========================================================
-       DISABLE OLD TRIGGER
+       TRY NOW
     ========================================================= */
 
-    disableOldTrigger();
+    initialize();
 
 
     /* =========================================================
-       WEBSITE RE-RENDER PROTECTION
+       OBSERVER
+       
+       Floating bawaan kadang baru muncul setelah
+       React/Vue/API selesai render.
     ========================================================= */
 
     const observer =
-        new MutationObserver(function () {
+        new MutationObserver(
+            function () {
 
-            disableOldTrigger();
+                /*
+                 * Kalau menu belum terbentuk
+                 * coba initialize lagi.
+                 */
 
-        });
+                if (
+                    !document.getElementById(
+                        MENU_ID
+                    )
+                ) {
+
+                    initialize();
+
+                }
+
+
+                /*
+                 * Pastikan original selalu hidden
+                 * walaupun website render ulang.
+                 */
+
+                const trigger =
+                    document.getElementById(
+                        TRIGGER_ID
+                    );
+
+
+                const list =
+                    document.getElementById(
+                        LIST_ID
+                    );
+
+
+                if (trigger) {
+
+                    trigger.style.setProperty(
+                        "display",
+                        "none",
+                        "important"
+                    );
+
+                }
+
+
+                if (list) {
+
+                    list.style.setProperty(
+                        "display",
+                        "none",
+                        "important"
+                    );
+
+                }
+
+            }
+        );
 
 
     observer.observe(
