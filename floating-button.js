@@ -3,7 +3,11 @@
 
     /* =========================================================
        AIRBET88 FLOATING QUICK ACCESS
-       FINAL - LEFT BOTTOM / COMPACT / RESPONSIVE
+       FINAL VERSION
+       - LEFT BOTTOM
+       - COMPACT
+       - RESPONSIVE
+       - THICK + GLOSSY GLOW TEXT
     ========================================================= */
 
     const STYLE_ID = "airbet88-floating-final-style";
@@ -38,38 +42,22 @@
 
 
     /* =========================================================
-       CLEAN OLD CUSTOM VERSIONS
+       REMOVE OLD CUSTOM VERSION
     ========================================================= */
 
-    const OLD_CUSTOM_IDS = [
-
+    [
         "airbet88-custom-floating-menu",
-
         "airbet88-floating-menu",
-
         "airbet88-floating-replacement",
-
         "airbet88-floating-v2",
+        "airbet88-floating-v3"
+    ].forEach(function (id) {
 
-        "airbet88-floating-v3",
-
-        "airbet88-floating-final"
-
-    ];
-
-
-    OLD_CUSTOM_IDS.forEach(function (id) {
-
-        const element =
+        const oldElement =
             document.getElementById(id);
 
-        if (
-            element &&
-            id !== WIDGET_ID
-        ) {
-
-            element.remove();
-
+        if (oldElement) {
+            oldElement.remove();
         }
 
     });
@@ -84,9 +72,7 @@
             WIDGET_ID
         )
     ) {
-
         return;
-
     }
 
 
@@ -100,7 +86,6 @@
             document.getElementById(
                 OLD_TRIGGER_ID
             );
-
 
         const oldList =
             document.getElementById(
@@ -165,11 +150,6 @@
 
         }
 
-
-        /*
-         * Wrapper floating bawaan ikut disembunyikan
-         * supaya tidak menyisakan tombol / area kosong.
-         */
 
         let originalWrapper = null;
 
@@ -237,7 +217,6 @@
                 "style"
             );
 
-
         style.id =
             STYLE_ID;
 
@@ -245,7 +224,7 @@
         style.textContent = `
 
             /* =================================================
-               ORIGINAL FLOATING OFF
+               HIDE ORIGINAL FLOATING
             ================================================= */
 
             #${OLD_TRIGGER_ID},
@@ -264,7 +243,6 @@
                     none !important;
 
             }
-
 
 
             /* =================================================
@@ -289,18 +267,17 @@
 
                 }
 
-
                 50% {
 
                     box-shadow:
 
                         0 0 12px
-                        rgba(64,255,225,.62),
+                        rgba(64,255,225,.60),
 
-                        0 0 28px
-                        rgba(64,255,225,.20),
+                        0 0 30px
+                        rgba(64,255,225,.22),
 
-                        0 12px 32px
+                        0 13px 32px
                         rgba(0,0,0,.48);
 
                 }
@@ -308,9 +285,28 @@
             }
 
 
+            @keyframes ab88TextGlow {
+
+                0%,
+                100% {
+
+                    filter:
+                        brightness(1);
+
+                }
+
+                50% {
+
+                    filter:
+                        brightness(1.18);
+
+                }
+
+            }
+
 
             /* =================================================
-               ROOT WIDGET
+               ROOT
             ================================================= */
 
             #${WIDGET_ID} {
@@ -320,6 +316,9 @@
 
                 left:
                     0 !important;
+
+                right:
+                    auto !important;
 
                 top:
                     auto !important;
@@ -376,9 +375,8 @@
             }
 
 
-
             /* =================================================
-               SIDE NAV
+               LEFT NAV
             ================================================= */
 
             #${WIDGET_ID}
@@ -414,7 +412,6 @@
             }
 
 
-
             /* =================================================
                SIDE TAB
             ================================================= */
@@ -440,12 +437,7 @@
                 border:
 
                     1px solid
-                    rgba(
-                        80,
-                        255,
-                        230,
-                        .48
-                    );
+                    rgba(80,255,230,.52);
 
                 border-left:
                     0;
@@ -478,13 +470,13 @@
                     center;
 
                 color:
-                    #e3fffb;
+                    #ffffff;
 
                 background:
 
                     radial-gradient(
                         circle at 100% 20%,
-                        rgba(72,255,225,.20),
+                        rgba(72,255,225,.21),
                         transparent 46%
                     ),
 
@@ -511,7 +503,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-tab::before {
 
@@ -527,17 +518,18 @@
                 background:
 
                     linear-gradient(
-                        180deg,
-                        transparent,
-                        rgba(94,255,233,.08),
-                        transparent
+                        90deg,
+                        rgba(255,255,255,.05),
+                        transparent 25%,
+                        rgba(78,255,229,.08),
+                        transparent 75%,
+                        rgba(255,255,255,.05)
                     );
 
                 pointer-events:
                     none;
 
             }
-
 
 
             #${WIDGET_ID}
@@ -550,16 +542,16 @@
                     absolute;
 
                 width:
-                    160%;
+                    170%;
 
                 height:
-                    24px;
+                    27px;
 
                 top:
-                    -40px;
+                    -45px;
 
                 left:
-                    -30%;
+                    -35%;
 
                 transform:
                     rotate(-14deg);
@@ -569,12 +561,15 @@
                     linear-gradient(
                         180deg,
                         transparent,
-                        rgba(255,255,255,.24),
+                        rgba(255,255,255,.30),
                         transparent
                     );
 
+                filter:
+                    blur(1px);
+
                 transition:
-                    top .50s ease;
+                    top .55s ease;
 
                 pointer-events:
                     none;
@@ -582,15 +577,13 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-tab:hover::after {
 
                 top:
-                    110px;
+                    115px;
 
             }
-
 
 
             #${WIDGET_ID}
@@ -602,35 +595,37 @@
                     42px;
 
                 border-color:
-                    #87ffef;
+                    #8affef;
 
                 background:
 
                     radial-gradient(
                         circle at 100% 20%,
-                        rgba(106,255,236,.30),
+                        rgba(110,255,238,.32),
                         transparent 47%
                     ),
 
                     linear-gradient(
                         155deg,
-                        #098d7f,
-                        #043e47
+                        #0a9484,
+                        #04424a
                     );
 
                 box-shadow:
 
                     0 0 10px
-                    rgba(80,255,229,.60),
+                    rgba(80,255,229,.70),
 
-                    0 0 27px
-                    rgba(80,255,229,.20),
+                    0 0 28px
+                    rgba(80,255,229,.28),
+
+                    0 0 42px
+                    rgba(80,255,229,.10),
 
                     0 12px 30px
-                    rgba(0,0,0,.46);
+                    rgba(0,0,0,.48);
 
             }
-
 
 
             /* =================================================
@@ -646,14 +641,14 @@
                         255,
                         224,
                         111,
-                        .42
+                        .44
                     );
 
                 background:
 
                     radial-gradient(
                         circle at 100% 20%,
-                        rgba(255,219,87,.10),
+                        rgba(255,219,87,.11),
                         transparent 47%
                     ),
 
@@ -668,14 +663,13 @@
 
                 box-shadow:
 
-                    0 0 9px
-                    rgba(255,217,87,.13),
+                    0 0 10px
+                    rgba(255,217,87,.16),
 
                     0 10px 27px
                     rgba(0,0,0,.42);
 
             }
-
 
 
             #${WIDGET_ID}
@@ -690,7 +684,7 @@
 
                     radial-gradient(
                         circle at 100% 20%,
-                        rgba(255,226,122,.20),
+                        rgba(255,226,122,.22),
                         transparent 47%
                     ),
 
@@ -702,11 +696,14 @@
 
                 box-shadow:
 
-                    0 0 9px
-                    rgba(255,228,136,.50),
+                    0 0 10px
+                    rgba(255,228,136,.62),
 
-                    0 0 22px
-                    rgba(255,211,70,.14),
+                    0 0 24px
+                    rgba(255,211,70,.22),
+
+                    0 0 38px
+                    rgba(255,211,70,.08),
 
                     0 12px 30px
                     rgba(0,0,0,.46);
@@ -714,9 +711,8 @@
             }
 
 
-
             /* =================================================
-               TAB TEXT
+               THICK + GLOSSY AIRBET88 TEXT
             ================================================= */
 
             #${WIDGET_ID}
@@ -734,56 +730,215 @@
                 text-orientation:
                     upright;
 
+                font-family:
+                    "Arial Black",
+                    "Arial Bold",
+                    Arial,
+                    Helvetica,
+                    sans-serif !important;
+
                 color:
-                    #dffff9;
+                    #ffffff !important;
 
                 font-size:
-                    7px;
+                    7.4px;
 
                 line-height:
                     1;
 
                 letter-spacing:
-                    0;
+                    .15px;
 
                 font-weight:
-                    900;
+                    900 !important;
+
+                font-style:
+                    normal;
 
                 text-transform:
                     uppercase;
 
+                -webkit-text-stroke:
+
+                    .28px
+                    rgba(255,255,255,.50);
+
+                paint-order:
+                    stroke fill;
+
                 text-shadow:
 
-                    0 0 4px
-                    rgba(78,255,229,.95),
+                    0 1px 0
+                    rgba(255,255,255,.75),
+
+                    0 -1px 0
+                    rgba(0,110,100,.30),
+
+                    0 0 2px
+                    rgba(255,255,255,1),
+
+                    0 0 5px
+                    rgba(90,255,235,1),
 
                     0 0 9px
-                    rgba(78,255,229,.57),
+                    rgba(70,255,228,.95),
 
-                    0 0 16px
-                    rgba(78,255,229,.22);
+                    0 0 15px
+                    rgba(70,255,228,.72),
+
+                    0 0 23px
+                    rgba(70,255,228,.45),
+
+                    0 0 32px
+                    rgba(70,255,228,.25);
+
+                filter:
+
+                    drop-shadow(
+                        0 0 2px
+                        rgba(79,255,229,.90)
+                    );
+
+                animation:
+
+                    ab88TextGlow
+                    2.2s
+                    ease-in-out
+                    infinite;
 
             }
 
 
+            /* =================================================
+               VIP TEXT GLOW
+            ================================================= */
 
             #${WIDGET_ID}
             .ab88-tab.vip
             .ab88-tab-text {
 
                 color:
-                    #ffe57e;
+                    #fff2aa !important;
+
+                -webkit-text-stroke:
+
+                    .28px
+                    rgba(255,250,220,.48);
 
                 text-shadow:
 
-                    0 0 5px
-                    rgba(255,226,120,.88),
+                    0 1px 0
+                    rgba(255,255,255,.78),
 
-                    0 0 11px
-                    rgba(255,210,65,.34);
+                    0 -1px 0
+                    rgba(140,100,0,.25),
+
+                    0 0 2px
+                    rgba(255,255,255,1),
+
+                    0 0 5px
+                    rgba(255,234,142,1),
+
+                    0 0 10px
+                    rgba(255,223,105,.95),
+
+                    0 0 16px
+                    rgba(255,214,76,.72),
+
+                    0 0 24px
+                    rgba(255,207,57,.43),
+
+                    0 0 32px
+                    rgba(255,207,57,.22);
+
+                filter:
+
+                    drop-shadow(
+                        0 0 2px
+                        rgba(255,226,115,.9)
+                    );
 
             }
 
+
+            /* =================================================
+               ACTIVE AIRBET88 TEXT
+            ================================================= */
+
+            #${WIDGET_ID}
+            .ab88-tab.active
+            .ab88-tab-text {
+
+                color:
+                    #ffffff !important;
+
+                -webkit-text-stroke:
+
+                    .34px
+                    rgba(255,255,255,.62);
+
+                text-shadow:
+
+                    0 1px 0
+                    rgba(255,255,255,.90),
+
+                    0 0 3px
+                    rgba(255,255,255,1),
+
+                    0 0 7px
+                    rgba(90,255,235,1),
+
+                    0 0 13px
+                    rgba(70,255,228,1),
+
+                    0 0 21px
+                    rgba(70,255,228,.82),
+
+                    0 0 31px
+                    rgba(70,255,228,.55),
+
+                    0 0 42px
+                    rgba(70,255,228,.30);
+
+            }
+
+
+            #${WIDGET_ID}
+            .ab88-tab.vip.active
+            .ab88-tab-text {
+
+                color:
+                    #fff7c7 !important;
+
+                -webkit-text-stroke:
+
+                    .34px
+                    rgba(255,250,220,.60);
+
+                text-shadow:
+
+                    0 1px 0
+                    rgba(255,255,255,.90),
+
+                    0 0 3px
+                    rgba(255,255,255,1),
+
+                    0 0 7px
+                    rgba(255,235,145,1),
+
+                    0 0 13px
+                    rgba(255,224,106,1),
+
+                    0 0 21px
+                    rgba(255,214,78,.80),
+
+                    0 0 31px
+                    rgba(255,207,57,.50),
+
+                    0 0 41px
+                    rgba(255,207,57,.27);
+
+            }
 
 
             /* =================================================
@@ -898,7 +1053,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-popup.show {
 
@@ -919,9 +1073,8 @@
             }
 
 
-
             /* =================================================
-               POPUP TOP NEON
+               TOP NEON
             ================================================= */
 
             #${WIDGET_ID}
@@ -967,7 +1120,6 @@
                     rgba(53,255,220,.52);
 
             }
-
 
 
             /* =================================================
@@ -1061,7 +1213,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-close:hover {
 
@@ -1071,7 +1222,6 @@
                     scale(1.07);
 
             }
-
 
 
             /* =================================================
@@ -1088,7 +1238,6 @@
                     15px;
 
             }
-
 
 
             #${WIDGET_ID}
@@ -1118,8 +1267,12 @@
                 text-transform:
                     uppercase;
 
-            }
+                text-shadow:
 
+                    0 0 8px
+                    rgba(74,255,228,.30);
+
+            }
 
 
             #${WIDGET_ID}
@@ -1146,7 +1299,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-title span {
 
@@ -1155,11 +1307,10 @@
 
                 text-shadow:
 
-                    0 0 13px
-                    rgba(69,255,226,.20);
+                    0 0 12px
+                    rgba(69,255,226,.28);
 
             }
-
 
 
             #${WIDGET_ID}
@@ -1186,7 +1337,6 @@
             }
 
 
-
             /* =================================================
                BODY
             ================================================= */
@@ -1201,7 +1351,6 @@
                     18px;
 
             }
-
 
 
             /* =================================================
@@ -1225,7 +1374,6 @@
                     8px;
 
             }
-
 
 
             /* =================================================
@@ -1303,7 +1451,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-item::before {
 
@@ -1343,7 +1490,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-item:hover {
 
@@ -1378,7 +1524,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-item-small {
 
@@ -1406,7 +1551,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-item-bottom {
 
@@ -1429,7 +1573,6 @@
                     5px;
 
             }
-
 
 
             #${WIDGET_ID}
@@ -1456,7 +1599,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-item-desc {
 
@@ -1473,7 +1615,6 @@
                     1.25;
 
             }
-
 
 
             #${WIDGET_ID}
@@ -1497,7 +1638,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-item:hover
             .ab88-arrow {
@@ -1506,7 +1646,6 @@
                     translateX(3px);
 
             }
-
 
 
             /* =================================================
@@ -1553,7 +1692,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-vip-box::after {
 
@@ -1593,7 +1731,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-vip-small {
 
@@ -1619,7 +1756,6 @@
                     900;
 
             }
-
 
 
             #${WIDGET_ID}
@@ -1649,7 +1785,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-vip-desc {
 
@@ -1672,7 +1807,6 @@
                     1.5;
 
             }
-
 
 
             /* =================================================
@@ -1750,7 +1884,6 @@
             }
 
 
-
             #${WIDGET_ID}
             .ab88-vip-cta:hover {
 
@@ -1765,15 +1898,11 @@
             }
 
 
-
             /* =================================================
                TABLET
             ================================================= */
 
-            @media
-            (
-                max-width: 768px
-            ) {
+            @media (max-width: 768px) {
 
                 #${WIDGET_ID} {
 
@@ -1807,6 +1936,15 @@
 
 
                 #${WIDGET_ID}
+                .ab88-tab-text {
+
+                    font-size:
+                        7px;
+
+                }
+
+
+                #${WIDGET_ID}
                 .ab88-popup {
 
                     left:
@@ -1829,31 +1967,16 @@
             }
 
 
-
             /* =================================================
                MOBILE
             ================================================= */
 
-            @media
-            (
-                max-width: 520px
-            ) {
-
-                /* =============================================
-                   ROOT POSITION
-
-                   Bottom navigation pada screenshot sekitar
-                   55-60px. Jadi floating diletakkan tepat
-                   di atas bottom navigation.
-                ============================================= */
+            @media (max-width: 520px) {
 
                 #${WIDGET_ID} {
 
                     left:
                         0 !important;
-
-                    right:
-                        auto !important;
 
                     top:
                         auto !important;
@@ -1867,11 +1990,6 @@
                 }
 
 
-
-                /* =============================================
-                   SIDE NAV
-                ============================================= */
-
                 #${WIDGET_ID}
                 .ab88-nav {
 
@@ -1880,11 +1998,6 @@
 
                 }
 
-
-
-                /* =============================================
-                   SMALL SIDE BUTTON
-                ============================================= */
 
                 #${WIDGET_ID}
                 .ab88-tab {
@@ -1912,22 +2025,83 @@
                 }
 
 
+                /* =================================================
+                   MOBILE TEXT
+                   TETAP TEBAL + GLOW
+                ================================================= */
+
                 #${WIDGET_ID}
                 .ab88-tab-text {
 
+                    font-family:
+                        "Arial Black",
+                        Arial,
+                        sans-serif !important;
+
                     font-size:
-                        6px;
+                        6.6px;
 
                     letter-spacing:
-                        0;
+                        .1px;
+
+                    font-weight:
+                        900 !important;
+
+                    -webkit-text-stroke:
+
+                        .25px
+                        rgba(255,255,255,.45);
+
+                    text-shadow:
+
+                        0 0 2px
+                        rgba(255,255,255,1),
+
+                        0 0 5px
+                        rgba(80,255,230,1),
+
+                        0 0 9px
+                        rgba(70,255,228,.92),
+
+                        0 0 15px
+                        rgba(70,255,228,.65),
+
+                        0 0 23px
+                        rgba(70,255,228,.35);
 
                 }
 
 
+                #${WIDGET_ID}
+                .ab88-tab.vip
+                .ab88-tab-text {
 
-                /* =============================================
-                   POPUP MOBILE
-                ============================================= */
+                    color:
+                        #fff2aa !important;
+
+                    text-shadow:
+
+                        0 0 2px
+                        rgba(255,255,255,1),
+
+                        0 0 5px
+                        rgba(255,235,145,1),
+
+                        0 0 9px
+                        rgba(255,222,100,.90),
+
+                        0 0 15px
+                        rgba(255,212,72,.62),
+
+                        0 0 23px
+                        rgba(255,207,57,.34);
+
+                }
+
+
+                /* =================================================
+                   MOBILE POPUP
+                ================================================= */
 
                 #${WIDGET_ID}
                 .ab88-popup {
@@ -1937,9 +2111,6 @@
 
                     left:
                         37px !important;
-
-                    right:
-                        auto !important;
 
                     top:
                         auto !important;
@@ -1993,11 +2164,6 @@
 
                 }
 
-
-
-                /* =============================================
-                   HEADER
-                ============================================= */
 
                 #${WIDGET_ID}
                 .ab88-header {
@@ -2083,11 +2249,6 @@
                 }
 
 
-
-                /* =============================================
-                   BODY
-                ============================================= */
-
                 #${WIDGET_ID}
                 .ab88-body {
 
@@ -2099,11 +2260,6 @@
 
                 }
 
-
-
-                /* =============================================
-                   2 COLUMNS
-                ============================================= */
 
                 #${WIDGET_ID}
                 .ab88-grid {
@@ -2120,11 +2276,6 @@
 
                 }
 
-
-
-                /* =============================================
-                   CARD
-                ============================================= */
 
                 #${WIDGET_ID}
                 .ab88-item {
@@ -2182,11 +2333,6 @@
 
                 }
 
-
-
-                /* =============================================
-                   VIP
-                ============================================= */
 
                 #${WIDGET_ID}
                 .ab88-vip-box {
@@ -2250,15 +2396,11 @@
             }
 
 
-
             /* =================================================
-               VERY SMALL MOBILE
+               SMALL MOBILE
             ================================================= */
 
-            @media
-            (
-                max-width: 360px
-            ) {
+            @media (max-width: 360px) {
 
                 #${WIDGET_ID} {
 
@@ -2287,6 +2429,15 @@
 
                     width:
                         31px;
+
+                }
+
+
+                #${WIDGET_ID}
+                .ab88-tab-text {
+
+                    font-size:
+                        6.2px;
 
                 }
 
@@ -2329,15 +2480,11 @@
             }
 
 
-
             /* =================================================
-               SHORT HEIGHT
+               SHORT SCREEN
             ================================================= */
 
-            @media
-            (
-                max-height: 620px
-            ) {
+            @media (max-height: 620px) {
 
                 #${WIDGET_ID}
                 .ab88-popup {
@@ -2374,19 +2521,17 @@
             }
 
 
-
             /* =================================================
                REDUCED MOTION
             ================================================= */
 
             @media
-            (
-                prefers-reduced-motion:
-                reduce
-            ) {
+            (prefers-reduced-motion: reduce) {
 
                 #${WIDGET_ID}
-                .ab88-tab {
+                .ab88-tab,
+                #${WIDGET_ID}
+                .ab88-tab-text {
 
                     animation:
                         none;
@@ -2430,10 +2575,6 @@
 
     widget.innerHTML = `
 
-        <!-- =================================================
-             LEFT BUTTONS
-        ================================================== -->
-
         <div class="ab88-nav">
 
 
@@ -2445,13 +2586,10 @@
             >
 
                 <span class="ab88-tab-text">
-
                     AIRBET88
-
                 </span>
 
             </button>
-
 
 
             <button
@@ -2462,16 +2600,13 @@
             >
 
                 <span class="ab88-tab-text">
-
                     VIP
-
                 </span>
 
             </button>
 
 
         </div>
-
 
 
         <!-- =================================================
@@ -2489,11 +2624,8 @@
                 class="ab88-close"
                 aria-label="Close"
             >
-
                 ×
-
             </button>
-
 
 
             <div class="ab88-header">
@@ -2506,19 +2638,15 @@
                 </div>
 
 
-
                 <div class="ab88-title">
 
                     SATU MENU,
 
                     <span>
-
                         SEMUA AKSES
-
                     </span>
 
                 </div>
-
 
 
                 <div class="ab88-desc">
@@ -2533,17 +2661,13 @@
             </div>
 
 
-
             <div class="ab88-body">
 
 
                 <div class="ab88-grid">
 
 
-
-                    <!-- ======================================
-                         BUKTI JP
-                    ======================================= -->
+                    <!-- BUKTI JP -->
 
                     <a
                         class="ab88-item"
@@ -2553,53 +2677,35 @@
                     >
 
                         <div class="ab88-item-small">
-
                             AIRBET88
-
                         </div>
-
 
 
                         <div class="ab88-item-bottom">
 
-
                             <div>
 
-
                                 <div class="ab88-item-name">
-
                                     BUKTI JP
-
                                 </div>
-
 
                                 <div class="ab88-item-desc">
-
                                     Lihat bukti kemenangan
-
                                 </div>
-
 
                             </div>
 
 
-
                             <span class="ab88-arrow">
-
                                 ›
-
                             </span>
-
 
                         </div>
 
                     </a>
 
 
-
-                    <!-- ======================================
-                         RTP GACOR
-                    ======================================= -->
+                    <!-- RTP -->
 
                     <a
                         class="ab88-item"
@@ -2609,53 +2715,35 @@
                     >
 
                         <div class="ab88-item-small">
-
                             LIVE INFO
-
                         </div>
-
 
 
                         <div class="ab88-item-bottom">
 
-
                             <div>
 
-
                                 <div class="ab88-item-name">
-
                                     RTP GACOR
-
                                 </div>
-
 
                                 <div class="ab88-item-desc">
-
                                     Cek RTP terbaru
-
                                 </div>
-
 
                             </div>
 
 
-
                             <span class="ab88-arrow">
-
                                 ›
-
                             </span>
-
 
                         </div>
 
                     </a>
 
 
-
-                    <!-- ======================================
-                         AYOCEK
-                    ======================================= -->
+                    <!-- AYOCEK -->
 
                     <a
                         class="ab88-item"
@@ -2665,53 +2753,35 @@
                     >
 
                         <div class="ab88-item-small">
-
                             OFFICIAL ACCESS
-
                         </div>
-
 
 
                         <div class="ab88-item-bottom">
 
-
                             <div>
 
-
                                 <div class="ab88-item-name">
-
                                     AYOCEK
-
                                 </div>
-
 
                                 <div class="ab88-item-desc">
-
                                     Cari akses AIRBET88
-
                                 </div>
-
 
                             </div>
 
 
-
                             <span class="ab88-arrow">
-
                                 ›
-
                             </span>
-
 
                         </div>
 
                     </a>
 
 
-
-                    <!-- ======================================
-                         POINT
-                    ======================================= -->
+                    <!-- POINT -->
 
                     <a
                         class="ab88-item"
@@ -2721,43 +2791,28 @@
                     >
 
                         <div class="ab88-item-small">
-
                             MEMBER BENEFIT
-
                         </div>
-
 
 
                         <div class="ab88-item-bottom">
 
-
                             <div>
 
-
                                 <div class="ab88-item-name">
-
                                     POINT ANTI RUNGKAD
-
                                 </div>
-
 
                                 <div class="ab88-item-desc">
-
                                     Cek point & benefit
-
                                 </div>
-
 
                             </div>
 
 
-
                             <span class="ab88-arrow">
-
                                 ›
-
                             </span>
-
 
                         </div>
 
@@ -2771,7 +2826,6 @@
 
 
         </div>
-
 
 
         <!-- =================================================
@@ -2789,11 +2843,8 @@
                 class="ab88-close"
                 aria-label="Close"
             >
-
                 ×
-
             </button>
-
 
 
             <div class="ab88-header">
@@ -2801,9 +2852,7 @@
 
                 <div
                     class="ab88-mini"
-                    style="
-                        color:#ffe17a;
-                    "
+                    style="color:#ffe17a;"
                 >
 
                     AIRBET88 VIP MEMBERSHIP
@@ -2811,15 +2860,12 @@
                 </div>
 
 
-
                 <div class="ab88-title">
 
                     UPGRADE KE
 
                     <span
-                        style="
-                            color:#ffe58b;
-                        "
+                        style="color:#ffe58b;"
                     >
 
                         VIP & VVIP
@@ -2827,7 +2873,6 @@
                     </span>
 
                 </div>
-
 
 
                 <div class="ab88-desc">
@@ -2840,7 +2885,6 @@
 
 
             </div>
-
 
 
             <div class="ab88-body">
@@ -2856,13 +2900,11 @@
                     </div>
 
 
-
                     <div class="ab88-vip-title">
 
                         AIRBET88 VIP & VVIP
 
                     </div>
-
 
 
                     <div class="ab88-vip-desc">
@@ -2878,7 +2920,6 @@
                 </div>
 
 
-
                 <a
                     class="ab88-vip-cta"
                     href="${URLS.vip}"
@@ -2886,13 +2927,9 @@
                     rel="noopener noreferrer"
                 >
 
-
                     <span>
-
                         LIHAT & DAFTAR VIP
-
                     </span>
-
 
 
                     <span
@@ -2901,11 +2938,8 @@
                             line-height:1;
                         "
                     >
-
                         ›
-
                     </span>
-
 
                 </a>
 
@@ -2919,15 +2953,13 @@
 
 
     /* =========================================================
-       APPEND TO BODY
+       APPEND
     ========================================================= */
 
     function appendWidget() {
 
         if (!document.body) {
-
             return false;
-
         }
 
 
@@ -3011,11 +3043,9 @@
         .forEach(
             function (button) {
 
-
                 button.addEventListener(
                     "click",
                     function (event) {
-
 
                         event.preventDefault();
 
@@ -3035,9 +3065,7 @@
 
 
                         if (!target) {
-
                             return;
-
                         }
 
 
@@ -3063,10 +3091,8 @@
 
                         }
 
-
                     }
                 );
-
 
             }
         );
@@ -3083,11 +3109,9 @@
         .forEach(
             function (button) {
 
-
                 button.addEventListener(
                     "click",
                     function (event) {
-
 
                         event.preventDefault();
 
@@ -3096,17 +3120,15 @@
 
                         closeAll();
 
-
                     }
                 );
-
 
             }
         );
 
 
     /* =========================================================
-       LINKS
+       LINK CLICK
     ========================================================= */
 
     widget
@@ -3116,21 +3138,17 @@
         .forEach(
             function (link) {
 
-
                 link.addEventListener(
                     "click",
                     function () {
-
 
                         setTimeout(
                             closeAll,
                             100
                         );
 
-
                     }
                 );
-
 
             }
         );
@@ -3158,7 +3176,6 @@
         "click",
         function (event) {
 
-
             if (
                 !widget.contains(
                     event.target
@@ -3169,19 +3186,17 @@
 
             }
 
-
         }
     );
 
 
     /* =========================================================
-       ESC CLOSE
+       ESC
     ========================================================= */
 
     document.addEventListener(
         "keydown",
         function (event) {
-
 
             if (
                 event.key ===
@@ -3191,7 +3206,6 @@
                 closeAll();
 
             }
-
 
         }
     );
@@ -3205,7 +3219,7 @@
 
 
     /* =========================================================
-       WATCH WEBSITE RE-RENDER
+       RE-RENDER PROTECTION
     ========================================================= */
 
     let observerTimer = null;
@@ -3214,7 +3228,6 @@
     const observer =
         new MutationObserver(
             function () {
-
 
                 clearTimeout(
                     observerTimer
@@ -3225,13 +3238,8 @@
                     setTimeout(
                         function () {
 
-
                             hideOriginalFloating();
 
-
-                            /*
-                             * Pastikan widget tetap ada.
-                             */
 
                             if (
                                 document.body &&
@@ -3246,11 +3254,9 @@
 
                             }
 
-
                         },
                         50
                     );
-
 
             }
         );
@@ -3278,29 +3284,23 @@
         "resize",
         function () {
 
-
-            const activePopup =
+            const openedPopup =
                 widget.querySelector(
                     ".ab88-popup.show"
                 );
 
 
-            if (!activePopup) {
-
+            if (!openedPopup) {
                 return;
-
             }
 
 
-            void activePopup.offsetHeight;
-
+            void openedPopup.offsetHeight;
 
         },
         {
-            passive:
-                true
+            passive: true
         }
     );
-
 
 })();
