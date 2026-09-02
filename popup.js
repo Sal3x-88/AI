@@ -1253,7 +1253,7 @@
 
         <a
           class="airbet88-btn"
-          href="https://linknewshortener-ai88.com/membership"
+          href="https://linknewshortener-ai88.com/airbet88vip"
           target="_blank"
           rel="noopener noreferrer"
         >
