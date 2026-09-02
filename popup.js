@@ -4,6 +4,7 @@
   const IMG = [
     "https://www.image2url.com/r2/default/images/1788134404273-d1424ead-1026-4009-8426-587f04269cdb.png",
     "https://www.image2url.com/r2/default/images/1788134215078-05a09351-a5f8-46c9-b7f8-2857000cd39a.png",
+    "https://www.image2url.com/r2/default/images/1788320456584-bb16e0a6-544c-43cd-810b-cf0fbb446b3a.png",
   ];
 
   const DELAY_KEY = "popup_delay_1h";
