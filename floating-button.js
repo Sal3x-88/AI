@@ -36,7 +36,7 @@
             "https://linknewshortener-ai88.com/point-anti-rungkad",
 
         vip:
-            "https://membershipvipairbet88.lovable.app/"
+            "https://linknewshortener-ai88.com/airbet88vip"
 
     };
 
